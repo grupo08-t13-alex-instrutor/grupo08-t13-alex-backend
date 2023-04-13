@@ -1,7 +1,7 @@
-import { AppDataSource } from '../data-source';
-import { Advertisement } from '../entities/adverts.entity';
-import { User } from '../entities/users.entity';
-import { IAdRequest } from '../interfaces/Ads';
+import { AppDataSource } from '../../data-source';
+import { Advertisement } from '../../entities/adverts.entity';
+import { User } from '../../entities/users.entity';
+import { IAdRequest } from '../../interfaces/Ads';
 
 const createAdsService = async (data: IAdRequest, userId: string) => {
     const userRepository = AppDataSource.getRepository(User);

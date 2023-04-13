@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { listingAdsController } from "../controllers";
+import listingAdsController from "../controllers/listingAds.controller";
 
 const listingAdsRoutes = Router();
 
