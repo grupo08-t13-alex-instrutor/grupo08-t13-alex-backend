@@ -12,8 +12,8 @@ const updateAdsService = async (data: IAdResponse, advertisementId: string) => {
         },  });
 
     const updatedAds = advertisementRespository.create({
-        ...findAds,
         ...data,
+        ...findAds
     });
     await advertisementRespository.save(updatedAds);
 
