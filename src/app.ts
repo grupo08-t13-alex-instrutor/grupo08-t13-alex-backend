@@ -2,8 +2,8 @@ import "express-async-errors";
 import express from "express";
 import "reflect-metadata";
 import cors from "cors"
-import { listingAdsRoutes } from "./routes";
 import handleError from "./errors/handleError";
+import listingAdsRoutes from "./routes/listingAds.routes";
 
 const app = express();
 
