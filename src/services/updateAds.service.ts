@@ -3,15 +3,17 @@ import { Advertisement } from '../entities/adverts.entity';
 import { User } from '../entities/users.entity';
 import { IAdResponse } from '../interfaces/Ads';
 
-const updateAdsService = async (data: IAdResponse, userId: string) => {
-    const userRepository = AppDataSource.getRepository(User);
+const updateAdsService = async (data: IAdResponse, advertisementId: string) => {
     const advertisementRespository = AppDataSource.getRepository(Advertisement);
 
-    const foundUser = await userRepository.findOneBy({ id: userId });
+    const findAds = await advertisementRespository.findOne({
+        where: {
+            id: advertisementId
+        },  });
 
     const updatedAds = advertisementRespository.create({
+        ...findAds,
         ...data,
-        user: foundUser,
     });
     await advertisementRespository.save(updatedAds);
 
