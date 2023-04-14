@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { IAdRequest } from '../interfaces/Ads';
+import { updateAdsService } from '../services/advertisement/updateAds.service';
 
 const updateAdsController = async (req: Request, res: Response) => {
     const data: IAdRequest = req.body;
@@ -10,6 +11,3 @@ const updateAdsController = async (req: Request, res: Response) => {
 };
 
 export { updateAdsController };
-function updateAdsService(data: any, advertisementId: string) {
-    throw new Error('Function not implemented.');
-}
