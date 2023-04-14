@@ -3,9 +3,11 @@ import {
   CreateDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { User } from "./users.entity";
+import { Image } from "./images.entity";
 
 @Entity("adverts")
 export class Advertisement {
@@ -41,6 +43,9 @@ export class Advertisement {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @OneToMany(() => Image, (image) => image.advertisemment)
+  images: Image[]
 
   @ManyToOne(() => User, (user) => user.id)
   user: User;
