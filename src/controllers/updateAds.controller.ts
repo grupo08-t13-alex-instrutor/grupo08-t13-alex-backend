@@ -7,7 +7,7 @@ const updateAdsController = async (req: Request, res: Response) => {
     const  advertisementId: string = req.params.advertisementId;
 
     const updatedAd = await updateAdsService(data, advertisementId);
-    return res.json(updatedAd);
+    return res.status(201).json(updatedAd);
 };
 
 export { updateAdsController };

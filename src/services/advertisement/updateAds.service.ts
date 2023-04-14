@@ -1,20 +1,24 @@
-import { AppDataSource } from '../../data-source';
-import { Advertisement } from '../../entities/adverts.entity';
-import { User } from '../../entities/users.entity';
-import { IAdResponse } from '../../interfaces/Ads';
+import { AppDataSource } from "../../data-source";
+import { Advertisement } from "../../entities/adverts.entity";
+import { IAdResponse } from "../../interfaces/Ads";
 
 const updateAdsService = async (data: IAdResponse, advertisementId: string) => {
     const advertisementRespository = AppDataSource.getRepository(Advertisement);
 
     const findAds = await advertisementRespository.findOne({
         where: {
-            id: advertisementId
-        },  });
+            id: advertisementId,
+        },
+        relations: {
+            images: true,
+        },
+    });
 
     const updatedAds = advertisementRespository.create({
+        ...findAds,
         ...data,
-        ...findAds
     });
+
     await advertisementRespository.save(updatedAds);
 
     return updatedAds;

@@ -1,16 +1,21 @@
-import { Router } from 'express';
-import { deleteAdvertisementController } from '../controllers/deleteAds.controllers';
-import { listingAdsController } from '../controllers/listingAds.controller';
-import returnTestMiddleware from '../middlewares/returntest.middleware';
-import { createAdsController } from '../controllers/createAds.controller';
+import { Router } from "express";
+import { createAdsController } from "../controllers/createAds.controller";
+import { deleteAdvertisementController } from "../controllers/deleteAds.controllers";
+import { listingAdsController } from "../controllers/listingAds.controller";
+import { updateAdsController } from "../controllers/updateAds.controller";
+import returnTestMiddleware from "../middlewares/returntest.middleware";
 
 const adsRoutes = Router();
 
-adsRoutes.get('', returnTestMiddleware, listingAdsController);
-adsRoutes.get('/:advertisementId', returnTestMiddleware, listingAdsController);
-adsRoutes.post('', returnTestMiddleware, createAdsController);
+adsRoutes.get("", returnTestMiddleware, listingAdsController);
+adsRoutes.get("/:advertisementId", returnTestMiddleware, listingAdsController);
+
+adsRoutes.patch("/:advertisementId", returnTestMiddleware, updateAdsController);
+
+adsRoutes.post("", returnTestMiddleware, createAdsController);
+
 adsRoutes.delete(
-    '/:advertisementId',
+    "/:advertisementId",
     returnTestMiddleware,
     deleteAdvertisementController
 );

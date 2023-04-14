@@ -1,5 +1,5 @@
 export interface IAdRequest {
-    image: string;
+    image: [id: string, link: string];
     brand: string;
     model: string;
     year: string;
@@ -11,7 +11,7 @@ export interface IAdRequest {
 }
 
 export interface IAdResponse {
-    image?: string;
+    image?: [id: string, link: string];
     brand?: string;
     model?: string;
     year?: string;
