@@ -20,19 +20,25 @@ const createAdsService = async (data: IAdRequest, userId: string) => {
 
     await advertisementRespository.save(newAd);
 
-    let imagesResponse = [];
-    images.map( async image => {
+    const { user, ...newAdResponse } = newAd;
+
+    // let imagesResponse = ["Olá teste"];
+    const imagesResponse = await Promise.all(images.map( async (image) => {        
         const newImage = imageRepository.create({
             ...image,
-            advertisement: newAd
+            advertisement: newAdResponse
         })
-
+        
         await imageRepository.save( newImage );
 
-        imagesResponse.push( newImage );
-    })
+        return { 
+            id: newImage.id,
+            link: newImage.link, 
+            advertisementId: newImage.advertisement.id
+        };
+    }))    
 
-    return { newAd, imagesResponse };
+    return { ...newAdResponse, images: imagesResponse };
 };
 
 export { createAdsService };
