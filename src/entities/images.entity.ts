@@ -10,5 +10,5 @@ export class Image {
   link: string;
 
   @ManyToOne(() => Advertisement, (advertisement) => advertisement.images)
-  advertisemment: Advertisement;
+  advertisement: Advertisement;
 }

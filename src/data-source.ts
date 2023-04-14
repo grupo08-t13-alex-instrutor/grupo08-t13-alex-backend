@@ -8,11 +8,13 @@ import { Comment } from "./entities/comments.entity";
 import { Image } from "./entities/images.entity";
 import { InitialMigration1681150546657 } from "./migrations/1681150546657-InitialMigration";
 import { UpdateRelationAddressUser1681150896692 } from "./migrations/1681150896692-UpdateRelationAddressUser";
+import { UpdateRelationAdverts1681493984101 } from "./migrations/1681493984101-UpdateRelationAdverts";
 const dataSourceConfig = (): DataSourceOptions => {
   const entities = [Address, Advertisement, Comment, Image, User];
   const migrations = [
     InitialMigration1681150546657,
     UpdateRelationAddressUser1681150896692,
+    UpdateRelationAdverts1681493984101
   ];
 
   return {
