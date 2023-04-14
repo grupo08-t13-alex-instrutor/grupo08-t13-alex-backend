@@ -9,6 +9,6 @@ export class Image {
   @Column()
   link: string;
 
-  @ManyToOne(() => Advertisement, (advertisement) => advertisement.id)
-  advertisemment: Advertisement;
+  @ManyToOne(() => Advertisement, (advertisement) => advertisement.images)
+  advertisement: Advertisement;
 }
