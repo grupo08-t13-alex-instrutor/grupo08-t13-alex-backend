@@ -1,10 +1,8 @@
 import {
   Column,
   Entity,
-  ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { User } from "./users.entity";
 
 @Entity("adresses")
 export class Address {
@@ -28,7 +26,4 @@ export class Address {
 
   @Column({ length: 200 })
   complement: string;
-
-  @ManyToOne(() => User, (user) => user.id)
-  user: User;
 }
