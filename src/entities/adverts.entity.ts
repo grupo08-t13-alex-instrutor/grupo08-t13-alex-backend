@@ -38,14 +38,14 @@ export class Advertisement {
   @Column({ length: 300 })
   description: string;
 
-  @Column()
+  @Column({ default: true })
   published: boolean;
 
   @CreateDateColumn()
   createdAt: Date;
 
-  @OneToMany(() => Image, (image) => image.advertisemment)
-  images: Image[]
+  @OneToMany(() => Image, (image) => image.advertisement)
+  images: Image[];
 
   @ManyToOne(() => User, (user) => user.id)
   user: User;

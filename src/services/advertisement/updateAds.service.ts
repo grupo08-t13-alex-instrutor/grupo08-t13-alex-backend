@@ -1,9 +1,8 @@
 import { AppDataSource } from '../../data-source';
 import { Advertisement } from '../../entities/adverts.entity';
-import { User } from '../../entities/users.entity';
-import { IAdResponse } from '../../interfaces/Ads';
+import { IAdUpdateRequest } from '../../interfaces/Ads';
 
-const updateAdsService = async (data: IAdResponse, advertisementId: string) => {
+const updateAdsService = async (data: IAdUpdateRequest, advertisementId: string) => {
     const advertisementRespository = AppDataSource.getRepository(Advertisement);
 
     const findAds = await advertisementRespository.findOne({
@@ -12,9 +11,10 @@ const updateAdsService = async (data: IAdResponse, advertisementId: string) => {
         },  });
 
     const updatedAds = advertisementRespository.create({
-        ...data,
-        ...findAds
+        ...findAds,
+        ...data
     });
+    
     await advertisementRespository.save(updatedAds);
 
     return updatedAds;
