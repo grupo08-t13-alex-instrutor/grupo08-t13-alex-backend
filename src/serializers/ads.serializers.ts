@@ -1,11 +1,13 @@
 import * as yup from "yup";
+import { SchemaOf } from "yup";
 import {
   imageRequestSerializer,
   imageResponseSerializer,
+  imageUpdateSerializer,
 } from "./image.serializers";
-import { userResponseSerializer } from "./users.serializers";
+import { IAdRequest, IAdResponse, IAdUpdateRequest } from "../interfaces/Ads";
 
-const adsRequestSerializer = yup.object().shape({
+const adsRequestSerializer: SchemaOf<IAdRequest> = yup.object().shape({
   brand: yup.string().max(250).required(),
   model: yup.string().max(250).required(),
   year: yup.string().min(4).max(4).required(),
@@ -18,20 +20,20 @@ const adsRequestSerializer = yup.object().shape({
   images: yup.array(imageRequestSerializer).max(250).required(),
 });
 
-const adsUpdateSerializer = yup.object().shape({
+const adsUpdateSerializer: SchemaOf<IAdUpdateRequest> = yup.object().shape({
   brand: yup.string().optional(),
   model: yup.string().optional(),
   year: yup.string().optional(),
-  fuel: yup.string().required(),
+  fuel: yup.string().optional(),
   mileage: yup.number().optional(),
   color: yup.string().optional(),
   price: yup.number().optional(),
   description: yup.string().optional(),
   published: yup.boolean().optional(),
-  images: yup.array(imageRequestSerializer).optional(),
+  images: yup.array(imageUpdateSerializer).optional(),
 });
 
-const adsResponseSerializer = yup.object().shape({
+const adsResponseSerializer: SchemaOf<IAdResponse> = yup.object().shape({
   id: yup.string(),
   brand: yup.string(),
   model: yup.string(),
@@ -45,7 +47,9 @@ const adsResponseSerializer = yup.object().shape({
   createdAt: yup.date(),
   updatedAt: yup.date(),
   images: yup.array(imageResponseSerializer),
-  user: userResponseSerializer,
+  user: yup.object({ id: yup.string() })
 });
 
-export { adsRequestSerializer, adsUpdateSerializer, adsResponseSerializer };
+const listingAdsSerializer: SchemaOf<IAdResponse[]> = yup.array(adsResponseSerializer);
+
+export { adsRequestSerializer, adsUpdateSerializer, adsResponseSerializer, listingAdsSerializer };

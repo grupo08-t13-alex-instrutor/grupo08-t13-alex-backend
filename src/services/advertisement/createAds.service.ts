@@ -2,9 +2,10 @@ import { AppDataSource } from "../../data-source";
 import { Advertisement } from "../../entities/adverts.entity";
 import { Image } from "../../entities/images.entity";
 import { User } from "../../entities/users.entity";
-import { IAdRequest } from "../../interfaces/Ads";
+import { IAdRequest, IAdResponse } from "../../interfaces/Ads";
+import { adsResponseSerializer } from "../../serializers/ads.serializers";
 
-const createAdsService = async (data: IAdRequest, userId: string) => {
+const createAdsService = async (data: IAdRequest, userId: string): Promise<IAdResponse> => {
     const { images, ...dataAd } = data;
     
     const userRepository = AppDataSource.getRepository(User);
@@ -17,28 +18,36 @@ const createAdsService = async (data: IAdRequest, userId: string) => {
         ...dataAd,
         user: foundUser,
     });
-
+    
     await advertisementRespository.save(newAd);
 
-    const { user, ...newAdResponse } = newAd;
+    const { user, ...createdAd } = newAd;
 
-    // let imagesResponse = ["Olá teste"];
-    const imagesResponse = await Promise.all(images.map( async (image) => {        
-        const newImage = imageRepository.create({
-            ...image,
-            advertisement: newAdResponse
+    let createdImages = [];
+
+    await Promise.all( 
+        images.map( async image => {        
+            const newImage = imageRepository.create({
+                ...image,
+                advertisement: createdAd
+            })
+            
+            await imageRepository.save( newImage );
+            
+            createdImages.push( newImage );
         })
-        
-        await imageRepository.save( newImage );
+    )
 
-        return { 
-            id: newImage.id,
-            link: newImage.link, 
-            advertisementId: newImage.advertisement.id
-        };
-    }))    
+    const createdData = {
+        ...newAd,
+        images: [
+            ...createdImages
+        ]
+    }
 
-    return { ...newAdResponse, images: imagesResponse };
+    const validatedDataResponse = await adsResponseSerializer.validate( createdData, { stripUnknown: true });
+
+    return validatedDataResponse;
 };
 
 export { createAdsService };

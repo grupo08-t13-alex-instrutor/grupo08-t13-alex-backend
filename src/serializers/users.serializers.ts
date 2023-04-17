@@ -25,7 +25,6 @@ const userResponseSerializer = yup.object().shape({
   name: yup.string().max(250),
   cpf: yup.string().min(11).max(11),
   email: yup.string().email(),
-  password: yup.string(),
   telephone: yup.number(),
   date_of_birth: yup.string(),
   description: yup.string().max(300),

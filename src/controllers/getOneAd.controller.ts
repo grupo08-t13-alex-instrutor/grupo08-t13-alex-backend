@@ -5,7 +5,7 @@ const getOneAdController = async ( req: Request, res: Response ) => {
     const advertisementId: string = req.params.advertisementId;
     const data = await getOneAdService( advertisementId );
     
-    return res.status(204).json(data);
+    return res.json(data);
 };
 
 export { getOneAdController };
