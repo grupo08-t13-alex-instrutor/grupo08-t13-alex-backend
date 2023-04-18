@@ -8,6 +8,7 @@ import {
 } from "typeorm";
 import { User } from "./users.entity";
 import { Image } from "./images.entity";
+import { Comment } from "./comments.entity";
 
 @Entity("adverts")
 export class Advertisement {
@@ -24,7 +25,7 @@ export class Advertisement {
   year: string;
 
   @Column()
-  fuel: string;
+  fuel: number;
 
   @Column()
   mileage: number;
@@ -46,7 +47,10 @@ export class Advertisement {
 
   @OneToMany(() => Image, (image) => image.advertisement)
   images: Image[];
+  
+  @OneToMany(() => Comment, (comment) => comment.advertisement)
+  comments: Comment[];
 
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.advertisements, { onDelete: "CASCADE" })
   user: User;
 }

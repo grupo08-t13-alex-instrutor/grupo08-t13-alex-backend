@@ -2,7 +2,7 @@ export interface iImageRequest {
     link: string;
 }
 
-export interface iUserResponse {
+export interface iUserAdResponse {
     id: string;
 }
 
@@ -20,7 +20,7 @@ export interface IAdRequest {
     brand: string;
     model: string;
     year: string;
-    fuel: string;
+    fuel: number;
     mileage: number;
     color: string;
     price: number;
@@ -33,7 +33,7 @@ export interface IAdUpdateRequest {
     brand?: string;
     model?: string;
     year?: string;
-    fuel?: string;
+    fuel?: number;
     mileage?: number;
     color?: string;
     price?: number;
@@ -47,7 +47,7 @@ export interface IAdResponse {
     brand: string;
     model: string;
     year: string;
-    fuel: string;
+    fuel: number;
     mileage: number;
     color: string;
     price: number;
@@ -56,5 +56,5 @@ export interface IAdResponse {
     createdAt: Date;
     updatedAt: Date;
     images: iImageResponse[];
-    user: iUserResponse;
+    user: iUserAdResponse;
 }

@@ -2,9 +2,10 @@ import { hashSync } from "bcryptjs";
 import { AppDataSource } from "../../data-source";
 import { User } from "../../entities/users.entity";
 import AppError from "../../errors/AppError"
+import { iUserResponse, iUserUpdate } from "../../interfaces/User";
 
 
-const userPatchService = async (dataUpdate, idUser: string) => {
+const userPatchService = async (dataUpdate: iUserUpdate, idUser: string): Promise<iUserResponse> => {
 
     const userRespository = AppDataSource.getRepository(User);
     const findUser = await userRespository.findOneBy({ id: idUser });
@@ -21,7 +22,11 @@ const userPatchService = async (dataUpdate, idUser: string) => {
             password: hashSync(`${dataUpdate.password}`, 10),
         });
 
-        return await userRespository.save(updateUser);
+        await userRespository.save(updateUser);
+
+        const { password, ...dataResponse } = updateUser;
+
+        return dataResponse;
     }
 
     const updateUser = userRespository.create({
@@ -31,7 +36,9 @@ const userPatchService = async (dataUpdate, idUser: string) => {
 
     const saveDataUpdateUser = await userRespository.save(updateUser);
 
-    return saveDataUpdateUser;
+    const { password, ...dataResponse } = saveDataUpdateUser;
+
+    return dataResponse;
 }
 
 export { userPatchService }
