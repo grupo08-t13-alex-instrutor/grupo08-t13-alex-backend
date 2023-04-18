@@ -47,3 +47,5 @@ export class User {
     this.password = hashSync(this.password, 10);
   }
 }
+
+export default User;
