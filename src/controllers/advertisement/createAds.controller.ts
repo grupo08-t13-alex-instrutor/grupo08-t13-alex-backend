@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { IAdRequest } from "../interfaces/Ads";
-import { createAdsService } from "../services/advertisement/createAds.service";
+import { IAdRequest } from "../../interfaces/Ads";
+import { createAdsService } from "../../services/advertisement/createAds.service";
 
 const createAdsController = async (req: Request, res: Response) => {
     const data: IAdRequest = req.body;
