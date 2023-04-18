@@ -5,15 +5,14 @@ import { createAdsController } from '../controllers/advertisement/createAds.cont
 import { updateAdsController } from '../controllers/advertisement/updateAds.controller';
 import { getOneAdController } from '../controllers/advertisement/getOneAd.controller';
 import { adsRequestSerializer, adsUpdateSerializer } from '../serializers/ads.serializers';
-import returnTestMiddleware from '../middlewares/returntest.middleware';
 import ensureDataIsValidMiddleware from '../middlewares/ensureDataIsValid.middleware';
 
 const adsRoutes = Router();
 
 adsRoutes.post('', ensureDataIsValidMiddleware(adsRequestSerializer), createAdsController);
-adsRoutes.get('', returnTestMiddleware, listingAdsController);
-adsRoutes.get('/:advertisementId', returnTestMiddleware, getOneAdController);
-adsRoutes.patch('/:advertisementId', ensureDataIsValidMiddleware(adsUpdateSerializer), returnTestMiddleware, updateAdsController);
-adsRoutes.delete('/:advertisementId', returnTestMiddleware, deleteAdvertisementController);
+adsRoutes.get('', listingAdsController);
+adsRoutes.get('/:advertisementId', getOneAdController);
+adsRoutes.patch('/:advertisementId', ensureDataIsValidMiddleware(adsUpdateSerializer), updateAdsController);
+adsRoutes.delete('/:advertisementId', deleteAdvertisementController);
 
 export { adsRoutes };
