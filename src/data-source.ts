@@ -6,14 +6,16 @@ import { User } from "./entities/users.entity";
 import { Advertisement } from "./entities/adverts.entity";
 import { Comment } from "./entities/comments.entity";
 import { Image } from "./entities/images.entity";
-import { InitialMigration1681495137328 } from "./migrations/1681495137328-InitialMigration";
-import { UpdateImages1681500235202 } from "./migrations/1681500235202-UpdateImages";
+import { InitialMigration1681766079107 } from "./migrations/1681766079107-InitialMigration";
+import { Relations1681766288351 } from "./migrations/1681766288351-Relations";
+import { UpdateUsers11681827123161 } from "./migrations/1681827123161-UpdateUsers1";
 
 const dataSourceConfig = (): DataSourceOptions => {
   const entities = [Address, Advertisement, Comment, Image, User];
   const migrations = [
-    InitialMigration1681495137328,
-    UpdateImages1681500235202
+    InitialMigration1681766079107,
+    Relations1681766288351,
+    UpdateUsers11681827123161
   ];
 
   return {

@@ -23,7 +23,7 @@ const createAdsService = async (data: IAdRequest, userId: string): Promise<IAdRe
 
     const { user, ...createdAd } = newAd;
 
-    let createdImages = [];
+    let newImages = [];
 
     await Promise.all( 
         images.map( async image => {        
@@ -34,14 +34,14 @@ const createAdsService = async (data: IAdRequest, userId: string): Promise<IAdRe
             
             await imageRepository.save( newImage );
             
-            createdImages.push( newImage );
+            newImages.push( newImage );
         })
     )
 
     const createdData = {
         ...newAd,
         images: [
-            ...createdImages
+            ...newImages
         ]
     }
 
