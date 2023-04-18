@@ -19,7 +19,7 @@ export class Address {
   city: string;
 
   @Column({ length: 150 })
-  road: string;
+  street: string;
 
   @Column()
   number: number;

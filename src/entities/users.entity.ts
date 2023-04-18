@@ -41,6 +41,9 @@ export class User {
   @Column({ length: 300 })
   description: string;
 
+  @Column({ default: true })
+  buyer: boolean;
+
   @CreateDateColumn()
   createdAt: Date;
 
