@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import { deleteAdvertisementController } from '../controllers/deleteAds.controllers';
-import { listingAdsController } from '../controllers/listingAds.controller';
-import returnTestMiddleware from '../middlewares/returntest.middleware';
-import { createAdsController } from '../controllers/createAds.controller';
-import { updateAdsController } from '../controllers/updateAds.controller';
-import { getOneAdController } from '../controllers/getOneAd.controller';
 import ensureDataIsValidMiddleware from '../middlewares/ensureDataIsValid.middleware';
 import { adsRequestSerializer, adsUpdateSerializer } from '../serializers/ads.serializers';
+import returnTestMiddleware from '../middlewares/returntest.middleware';
+import { listingAdsController } from '../controllers/adsControllers/listingAds.controller';
+import { getOneAdController } from '../controllers/adsControllers/getOneAd.controller';
+import { createAdsController } from '../controllers/adsControllers/createAds.controller';
+import { deleteAdvertisementController } from '../controllers/adsControllers/deleteAds.controllers';
+import { updateAdsController } from '../controllers/adsControllers/updateAds.controller';
 
 const adsRoutes = Router();
 

@@ -1,13 +1,12 @@
-import { Interface } from "readline"
-
 export interface iUserRequest{
     name: string;
     cpf: string;
     email: string;
     password: string;
-    telephone: number;
+    telephone: string;
     date_of_birth: string;
     description: string;
+    buyer?: boolean;
 }
 
 export interface iUserResponse{
@@ -15,9 +14,10 @@ export interface iUserResponse{
     name: string;
     cpf: string;
     email: string;
-    telephone: number;
+    telephone: string;
     date_of_birth: string;
     description: string;
+    buyer: boolean;
     createdAt: Date;
     updatedAt: Date;
 }

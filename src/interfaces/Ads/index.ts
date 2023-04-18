@@ -2,7 +2,7 @@ export interface iImageRequest {
     link: string;
 }
 
-export interface iUserResponse {
+export interface iUserAdResponse {
     id: string;
 }
 
@@ -56,5 +56,5 @@ export interface IAdResponse {
     createdAt: Date;
     updatedAt: Date;
     images: iImageResponse[];
-    user: iUserResponse;
+    user: iUserAdResponse;
 }

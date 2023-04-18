@@ -5,9 +5,10 @@ const userRequestSerializer = yup.object().shape({
   cpf: yup.string().min(11).max(11).required(),
   email: yup.string().email().required(),
   password: yup.string().required(),
-  telephone: yup.number().required(),
+  telephone: yup.string().required(),
   date_of_birth: yup.string().required(),
   description: yup.string().max(300).required(),
+  buyer: yup.boolean().optional(),
 });
 
 const userUpdateSerializer = yup.object().shape({
@@ -15,7 +16,7 @@ const userUpdateSerializer = yup.object().shape({
   cpf: yup.string().min(11).max(11),
   email: yup.string().email(),
   password: yup.string(),
-  telephone: yup.number(),
+  telephone: yup.string(),
   date_of_birth: yup.string(),
   description: yup.string().max(300),
 });
@@ -25,9 +26,10 @@ const userResponseSerializer = yup.object().shape({
   name: yup.string().max(250),
   cpf: yup.string().min(11).max(11),
   email: yup.string().email(),
-  telephone: yup.number(),
+  telephone: yup.string(),
   date_of_birth: yup.string(),
   description: yup.string().max(300),
+  buyer: yup.boolean(),
   createdAt: yup.date(),
   updatedAt: yup.date(),
 });

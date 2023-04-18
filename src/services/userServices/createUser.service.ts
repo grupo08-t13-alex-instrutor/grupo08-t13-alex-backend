@@ -1,5 +1,5 @@
 import { AppDataSource } from "../../data-source";
-import AppError from '../../errors';
+import AppError from "../../errors/AppError";
 import User from './../../entities/users.entity';
 import { iUserRequest, iUserResponse } from './../../interfaces/User/index';
 
@@ -9,13 +9,13 @@ export const createUserService = async (userData: iUserRequest): Promise<iUserRe
 
     const searchUserByEmail = await userRepository.findOneBy({email: userData.email});
     if (searchUserByEmail){
-        throw new AppError("Email already exists", 409);
+        throw new AppError(409, "Email already exists");
     };
 
     const user = userRepository.create(userData);
     await userRepository.save(user);
 
-    const { password, ...userWithoutPassword } = user
+    const { password, ...userWithoutPassword  } = user
 
     return userWithoutPassword;
 }; 
