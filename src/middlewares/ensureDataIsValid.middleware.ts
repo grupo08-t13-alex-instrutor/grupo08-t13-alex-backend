@@ -10,6 +10,8 @@ const ensureDataIsValidMiddleware = ( schema: AnySchema ) => async ( req: Reques
             abortEarly: false
         })
 
+        req.body = validatedData;
+
         return next();
     } catch ( error: any ) {
         throw new AppError( 400, error.errors );
