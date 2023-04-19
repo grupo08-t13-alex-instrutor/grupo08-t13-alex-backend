@@ -6,25 +6,13 @@ import jwt from "jsonwebtoken";
 import { iUserLoginRequest } from "../../interfaces/login";
 
 const sessionService = async ({ email, password }: iUserLoginRequest) => {
-    console.log("entrando no sevice");
-    
-
     const userRepository = AppDataSource.getRepository(User);
 
-    const user = await userRepository.findOneBy({
-        email: email,
-    });
-    console.log(user);
-    
-    if (!user) {
-        throw new AppError(400, "User is not exists or invalidate email!");
-    }
+    const user = await userRepository.findOneByOrFail({ email: email })
+        .catch( reason => { throw new AppError( 403, "Invalid email or password" )})
 
-    const passwordMatch = await compare(password, user.password);
-
-    if (!passwordMatch) {
-        throw new AppError(403, "password invalid");
-    }
+    const isPassword = await compare(password, user.password)
+        .catch( reason => { throw new AppError( 403, "Invalid email or password" )});
 
     const token = jwt.sign(
         {
@@ -38,7 +26,6 @@ const sessionService = async ({ email, password }: iUserLoginRequest) => {
     );
 
     return token;
-
 }
 
 export default sessionService

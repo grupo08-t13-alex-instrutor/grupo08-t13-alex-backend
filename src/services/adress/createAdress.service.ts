@@ -7,7 +7,6 @@ export const createAdressService = async (adressData: iAdressRequest): Promise<i
 
     const adressRepository = AppDataSource.getRepository(Address);
 
-
     const adress = adressRepository.create(adressData);
     await adressRepository.save(adress);
 

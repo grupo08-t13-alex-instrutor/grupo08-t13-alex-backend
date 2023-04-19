@@ -7,6 +7,7 @@ export interface iUserRequest{
     date_of_birth: string;
     description: string;
     buyer?: boolean;
+    address: string;
 }
 
 export interface iUserUpdate{

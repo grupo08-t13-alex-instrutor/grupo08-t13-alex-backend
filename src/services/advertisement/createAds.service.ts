@@ -12,7 +12,7 @@ const createAdsService = async (data: IAdRequest, userId: string): Promise<IAdRe
     const advertisementRespository = AppDataSource.getRepository(Advertisement);
     const imageRepository = AppDataSource.getRepository(Image);
 
-    const foundUser = await userRepository.findOneBy({ id: userId });
+    const foundUser = await userRepository.findOneByOrFail({ id: userId });
     
     const newAd = advertisementRespository.create({
         ...dataAd,

@@ -11,6 +11,7 @@ const userRequestSerializer: SchemaOf<iUserRequest> = yup.object().shape({
   date_of_birth: yup.string().required(),
   description: yup.string().max(300).required(),
   buyer: yup.boolean().optional(),
+  address: yup.string().required()
 });
 
 const userUpdateSerializer: SchemaOf<iUserUpdate> = yup.object().shape({
