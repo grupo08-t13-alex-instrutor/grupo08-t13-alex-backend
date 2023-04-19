@@ -14,8 +14,8 @@ const userRoutes = Router();
 userRoutes.post("/login", sessionController)
 
 userRoutes.post('', ensureDataIsValidMiddleware(userRequestSerializer), createUserController)
-userRoutes.get('/:userId', listAnUserController)
 userRoutes.get('/allUsers', listAllUsersController)
+userRoutes.get('/:userId', ensureAuthMiddleware, listAnUserController)
 userRoutes.patch("", ensureDataIsValidMiddleware(userUpdateSerializer), ensureAuthMiddleware, userPatchController)
 userRoutes.delete("", ensureAuthMiddleware, userDeletController)
 

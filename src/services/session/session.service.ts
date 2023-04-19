@@ -3,15 +3,19 @@ import { AppDataSource } from "../../data-source";
 import { User } from "../../entities/users.entity";
 import AppError from "../../errors/AppError";
 import jwt from "jsonwebtoken";
+import { iUserLoginRequest } from "../../interfaces/login";
 
-const sessionService = async ({ email, password }) => {
+const sessionService = async ({ email, password }: iUserLoginRequest) => {
+    console.log("entrando no sevice");
+    
 
     const userRepository = AppDataSource.getRepository(User);
 
     const user = await userRepository.findOneBy({
         email: email,
     });
-
+    console.log(user);
+    
     if (!user) {
         throw new AppError(400, "User is not exists or invalidate email!");
     }

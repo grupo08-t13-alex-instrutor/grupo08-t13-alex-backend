@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import sessionService from "../../services/session/session.service"
+import { iUserLoginRequest } from "../../interfaces/login";
 
 const sessionController = async (req: Request, res: Response) => {
-    const userData = req.body;
+    const userData: iUserLoginRequest = req.body;
 
     const token = await sessionService(userData)
 

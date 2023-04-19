@@ -35,6 +35,8 @@ const userPatchService = async (dataUpdate: iUserUpdate, idUser: string): Promis
     });
 
     const saveDataUpdateUser = await userRespository.save(updateUser);
+    console.log(saveDataUpdateUser);
+    
 
     const { password, ...dataResponse } = saveDataUpdateUser;
 
