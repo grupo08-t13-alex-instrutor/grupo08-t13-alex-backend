@@ -9,7 +9,7 @@ const userPatchController = async (req: Request, res: Response) => {
 
     const data = await userPatchService( bodyUpdate, idUser)
 
-    return res.json(200).json(data)
+    return res.status(200).json(data)
 }
 
 export { userPatchController }
