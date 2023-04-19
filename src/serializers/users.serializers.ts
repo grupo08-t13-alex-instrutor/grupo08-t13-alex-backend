@@ -36,4 +36,6 @@ const userResponseSerializer: SchemaOf<iUserResponse> = yup.object().shape({
   updatedAt: yup.date(),
 });
 
-export { userRequestSerializer, userUpdateSerializer, userResponseSerializer };
+const allUsersResponseSerializer: SchemaOf<iUserResponse[]> = yup.array(userResponseSerializer)
+
+export { userRequestSerializer, userUpdateSerializer, userResponseSerializer, allUsersResponseSerializer };
