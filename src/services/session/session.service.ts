@@ -17,6 +17,7 @@ const sessionService = async ({ email, password }: iUserLoginRequest) => {
     const token = jwt.sign(
         {
             type: user.email,
+            buyer: user.buyer,
         },
         process.env.SECRET_KEY,
         {

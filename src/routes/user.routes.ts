@@ -16,7 +16,7 @@ userRoutes.post("/login", sessionController)
 userRoutes.post('', ensureDataIsValidMiddleware(userRequestSerializer), createUserController)
 userRoutes.get('/allUsers', listAllUsersController)
 userRoutes.get('/:userId', ensureAuthMiddleware, listAnUserController)
-userRoutes.patch("", ensureDataIsValidMiddleware(userUpdateSerializer), ensureAuthMiddleware, userPatchController)
+userRoutes.patch("",  ensureAuthMiddleware, ensureDataIsValidMiddleware(userUpdateSerializer), userPatchController)
 userRoutes.delete("", ensureAuthMiddleware, userDeletController)
 
 export default userRoutes

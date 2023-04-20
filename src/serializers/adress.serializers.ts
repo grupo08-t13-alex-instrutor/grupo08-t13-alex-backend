@@ -4,13 +4,13 @@ import { iAdressRequest,iAdressRespopnse,iAdressUpdate } from "../interfaces/Adr
 
 const adressRequestSerializer: SchemaOf<iAdressRequest> = yup.object().shape({
     cep: yup.string()
-        .matches( /([0-9]{5})([-]{1})([0-9]{3})/, 'O padrão de cep é 00000-000' )
-        .required( 'O campo cep é obrigatório!' ),
-    state:  yup.string().required( 'O campo state é obrigatório!' ),
-    city:  yup.string().required( 'O campo city é obrigatório!' ),
-    street:  yup.string().required( 'O campo street é obrigatório!' ),
-    number:  yup.number().required( 'O campo number é obrigatório!' ),
-    complement:  yup.string().required( 'O campo complement é obrigatório!' ),
+        .matches( /([0-9]{5})([-]{1})([0-9]{3})/, { message: { cep: 'O padrão de cep é 00000-000' } })
+        .required( { cep: 'O campo cep é obrigatório!' } ),
+    state:  yup.string().required( { state: 'O campo state é obrigatório!'} ),
+    city:  yup.string().required( { city: 'O campo city é obrigatório!' } ),
+    street:  yup.string().required( { street: 'O campo street é obrigatório!' } ),
+    number:  yup.number().required( { number: 'O campo number é obrigatório!' } ),
+    complement:  yup.string().required( { complement: 'O campo complement é obrigatório!' } ),
 });
 
 const adressResponseSerializer: SchemaOf<iAdressRespopnse> = yup.object().shape({
@@ -25,7 +25,7 @@ const adressResponseSerializer: SchemaOf<iAdressRespopnse> = yup.object().shape(
 
 const adressUpdateSerializer: SchemaOf<iAdressUpdate> = yup.object().shape({
     cep: yup.string()
-        .matches( /([0-9]{5})([-]{1})([0-9]{3})/, 'O padrão de cep é 00000-000' )
+        .matches( /([0-9]{5})([-]{1})([0-9]{3})/, { message: { cep: 'O padrão de cep é 00000-000' } })
         .notRequired(),
     state:  yup.string().notRequired(),
     city:  yup.string().notRequired(),

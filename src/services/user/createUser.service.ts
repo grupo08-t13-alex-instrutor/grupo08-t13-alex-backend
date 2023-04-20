@@ -5,7 +5,7 @@ import { iUserRequest, iUserResponse } from '../../interfaces/User/index';
 import { Address } from "../../entities/adresses.entity";
 
 export const createUserService = async (userData: iUserRequest): Promise<iUserResponse> => {
-    const { address, ...user } = userData;
+    const { addressId, ...user } = userData;
 
     const userRepository = AppDataSource.getRepository(User);
     const addressRepository = AppDataSource.getRepository(Address);
@@ -15,7 +15,7 @@ export const createUserService = async (userData: iUserRequest): Promise<iUserRe
         throw new AppError(409, "Email already exists");
     };
     
-    const searchAddress = await addressRepository.findOneByOrFail({ id: address })
+    const searchAddress = await addressRepository.findOneByOrFail({ id: addressId })
         .catch( reason => { throw new AppError( 409, "Address not found" ) });
 
     const data = {

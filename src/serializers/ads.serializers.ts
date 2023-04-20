@@ -8,25 +8,25 @@ import {
 import { IAdRequest, IAdResponse, IAdUpdateRequest } from "../interfaces/Ads";
 
 const adsRequestSerializer: SchemaOf<IAdRequest> = yup.object().shape({
-  brand: yup.string().max(250).required( 'O campo brand é obrigatório!' ),
-  model: yup.string().max(250).required( 'O campo model é obrigatório!' ),
+  brand: yup.string().max(250).required( { brand: 'Este campo é obrigatório!' } ),
+  model: yup.string().max(250).required( { model: 'O campo model é obrigatório!' } ),
   year: yup.string()
-    .matches( /[0-9]{4}/, 'Deve conter apenas números (0000)' )
-    .required( 'O campo year é obrigatório!' ),
-  fuel: yup.number().required( 'O campo fuel é obrigatório!' ),
-  mileage: yup.number().required( 'O campo mileage é obrigatório!' ),
-  color: yup.string().max(50).required( 'O campo color é obrigatório!' ),
-  price: yup.number().required( 'O campo price é obrigatório!' ),
-  description: yup.string().max(300).required( 'O campo description é obrigatório!' ),
+    .matches( /[0-9]{4}/, { message: { year: 'Deve conter apenas números (0000)' } })
+    .required( { year: 'Este campo é obrigatório!' }),
+  fuel: yup.number().required( { fuel: 'Este campo é obrigatório!' }),
+  mileage: yup.number().required( { mileage: 'Este campo é obrigatório!' }),
+  color: yup.string().max(50).required( { color: 'Este campo é obrigatório!' }),
+  price: yup.number().required( { price: 'Este campo é obrigatório!' }),
+  description: yup.string().max(300).required( { description: 'Este campo é obrigatório!' }),
   published: yup.boolean().default(true),
-  images: yup.array(imageRequestSerializer).max(250).required( 'O campo images é obrigatório!' ),
+  images: yup.array(imageRequestSerializer).max(250).required( { images: 'Este campo é obrigatório!' }),
 });
 
 const adsUpdateSerializer: SchemaOf<IAdUpdateRequest> = yup.object().shape({
   brand: yup.string().optional(),
   model: yup.string().optional(),
   year: yup.string()
-    .matches( /[0-9]{4}/, 'Deve conter apenas números (0000)' )
+    .matches( /[0-9]{4}/, { message: { year: 'Deve conter apenas números (0000)' } } )
     .optional(),
   fuel: yup.number().optional(),
   mileage: yup.number().optional(),

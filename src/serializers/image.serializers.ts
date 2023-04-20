@@ -3,7 +3,7 @@ import { SchemaOf } from "yup";
 import { iImageRequest, iImageResponse, iImageUpdateRequest } from "../interfaces/Ads";
 
 const imageRequestSerializer: SchemaOf<iImageRequest> = yup.object().shape({
-  link: yup.string().required( 'O campo link é obrigatório!' ),
+  link: yup.string().required( { link: 'Este campo é obrigatório!' }),
 });
 
 const imageUpdateSerializer: SchemaOf<iImageUpdateRequest> = yup.object().shape({
