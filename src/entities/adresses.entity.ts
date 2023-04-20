@@ -9,7 +9,7 @@ export class Address {
   @PrimaryGeneratedColumn("uuid")
   id: string;
 
-  @Column({ length: 8 })
+  @Column({ length: 9 })
   cep: string;
 
   @Column({ length: 150 })

@@ -3,7 +3,7 @@ import { userResponseSerializer } from "./users.serializers";
 import { adsResponseSerializer } from "./ads.serializers";
 
 const commentRequestSerializer = yup.object().shape({
-  description: yup.string().max(300).required(),
+  description: yup.string().max(300).required( 'O campo description é obrigatório!' ),
 });
 
 const commentResponseSerializer = yup.object().shape({

@@ -23,7 +23,7 @@ export class User {
   @Column({ length: 250 })
   name: string;
 
-  @Column({ unique: true, length: 11  })
+  @Column({ unique: true, length: 14  })
   cpf: string;
 
   @Column({ unique: true })
@@ -32,10 +32,10 @@ export class User {
   @Column()
   password: string;
 
-  @Column({ length: 11 })
+  @Column({ length: 14 })
   telephone: string;
 
-  @Column()
+  @Column({ length: 10 })
   date_of_birth: string;
 
   @Column({ length: 300 })

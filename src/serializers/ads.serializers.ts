@@ -8,22 +8,26 @@ import {
 import { IAdRequest, IAdResponse, IAdUpdateRequest } from "../interfaces/Ads";
 
 const adsRequestSerializer: SchemaOf<IAdRequest> = yup.object().shape({
-  brand: yup.string().max(250).required(),
-  model: yup.string().max(250).required(),
-  year: yup.string().min(4).max(4).required(),
-  fuel: yup.number().required(),
-  mileage: yup.number().required(),
-  color: yup.string().max(50).required(),
-  price: yup.number().required(),
-  description: yup.string().max(300).required(),
+  brand: yup.string().max(250).required( 'O campo brand é obrigatório!' ),
+  model: yup.string().max(250).required( 'O campo model é obrigatório!' ),
+  year: yup.string()
+    .matches( /[0-9]{4}/, 'Deve conter apenas números (0000)' )
+    .required( 'O campo year é obrigatório!' ),
+  fuel: yup.number().required( 'O campo fuel é obrigatório!' ),
+  mileage: yup.number().required( 'O campo mileage é obrigatório!' ),
+  color: yup.string().max(50).required( 'O campo color é obrigatório!' ),
+  price: yup.number().required( 'O campo price é obrigatório!' ),
+  description: yup.string().max(300).required( 'O campo description é obrigatório!' ),
   published: yup.boolean().default(true),
-  images: yup.array(imageRequestSerializer).max(250).required(),
+  images: yup.array(imageRequestSerializer).max(250).required( 'O campo images é obrigatório!' ),
 });
 
 const adsUpdateSerializer: SchemaOf<IAdUpdateRequest> = yup.object().shape({
   brand: yup.string().optional(),
   model: yup.string().optional(),
-  year: yup.string().optional(),
+  year: yup.string()
+    .matches( /[0-9]{4}/, 'Deve conter apenas números (0000)' )
+    .optional(),
   fuel: yup.number().optional(),
   mileage: yup.number().optional(),
   color: yup.string().optional(),
