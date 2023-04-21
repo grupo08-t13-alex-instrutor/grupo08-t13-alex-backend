@@ -1,13 +1,13 @@
 import { Request, Response } from "express";
 import sessionService from "../../services/session/session.service"
-import { iUserLoginRequest } from "../../interfaces/login";
+import { iUserLoginReq } from "../../interfaces/session/request";
 
 const sessionController = async (req: Request, res: Response) => {
-    const userData: iUserLoginRequest = req.body;
+    const userData: iUserLoginReq = req.body;
 
     const token = await sessionService(userData)
 
-    return res.status(200).json({ token });
+    return res.status(200).json(token);
 };
 
 export { sessionController };

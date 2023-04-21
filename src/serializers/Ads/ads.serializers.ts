@@ -1,11 +1,10 @@
+
 import * as yup from "yup";
+import { imageRequestSerializer, imageResponseSerializer, imageUpdateSerializer } from "../Img/image.serializers";
+import { IAdResponse } from "../../interfaces/Ads/response";
 import { SchemaOf } from "yup";
-import {
-  imageRequestSerializer,
-  imageResponseSerializer,
-  imageUpdateSerializer,
-} from "./image.serializers";
-import { IAdRequest, IAdResponse, IAdUpdateRequest } from "../interfaces/Ads";
+import { IAdRequest, IAdUpdateRequest } from "../../interfaces/Ads/request";
+
 
 const adsRequestSerializer: SchemaOf<IAdRequest> = yup.object().shape({
   brand: yup.string().max(250).required(),
@@ -33,6 +32,7 @@ const adsUpdateSerializer: SchemaOf<IAdUpdateRequest> = yup.object().shape({
   images: yup.array(imageUpdateSerializer).optional(),
 });
 
+
 const adsResponseSerializer: SchemaOf<IAdResponse> = yup.object().shape({
   id: yup.string(),
   brand: yup.string(),
@@ -50,6 +50,12 @@ const adsResponseSerializer: SchemaOf<IAdResponse> = yup.object().shape({
   user: yup.object({ id: yup.string() })
 });
 
+
 const listingAdsSerializer: SchemaOf<IAdResponse[]> = yup.array(adsResponseSerializer);
 
-export { adsRequestSerializer, adsUpdateSerializer, adsResponseSerializer, listingAdsSerializer };
+export {
+  adsResponseSerializer,
+  listingAdsSerializer,
+  adsRequestSerializer,
+  adsUpdateSerializer
+};

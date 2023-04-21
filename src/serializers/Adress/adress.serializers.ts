@@ -1,6 +1,7 @@
 import * as yup from "yup";
 import { SchemaOf } from "yup";
-import { iAdressRequest,iAdressRespopnse,iAdressUpdate } from "../interfaces/Adress";
+import { iAdressRequest, iAdressUpdate } from "../../interfaces/Adress/request";
+import { iAdressRespopnse } from "../../interfaces/Adress/response";
 
 const adressRequestSerializer: SchemaOf<iAdressRequest> = yup.object().shape({
     cep: yup.string().max(8).required(),
@@ -30,4 +31,4 @@ const adressUpdateSerializer: SchemaOf<iAdressUpdate> = yup.object().shape({
     complement:  yup.string().notRequired()
 });
 
-export {adressRequestSerializer, adressResponseSerializer, adressUpdateSerializer}
+export {adressRequestSerializer, adressResponseSerializer, adressUpdateSerializer} 

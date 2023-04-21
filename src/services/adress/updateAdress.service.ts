@@ -1,13 +1,14 @@
 import { AppDataSource } from "../../data-source";
 import { Address } from "../../entities/adresses.entity";
-import { iAdressRespopnse, iAdressUpdate } from "../../interfaces/Adress";
-import { adressResponseSerializer, adressUpdateSerializer } from "../../serializers/adress.serializers";
+import { iAdressUpdate } from "../../interfaces/Adress/request";
+import { iAdressRespopnse } from "../../interfaces/Adress/response";
+import { adressResponseSerializer } from "../../serializers/Adress/adress.serializers";
 
-export const updateAdressService = async (updateDate: iAdressUpdate, adressId: string): Promise<iAdressRespopnse> =>{
+export const updateAdressService = async (updateDate: iAdressUpdate, adressId: string): Promise<iAdressRespopnse> => {
     const adressRepository = AppDataSource.getRepository(Address);
 
     const findAdress = await adressRepository.findOneBy({
-            id: adressId
+        id: adressId
     })
 
     const updateAdress = adressRepository.create({
@@ -15,7 +16,7 @@ export const updateAdressService = async (updateDate: iAdressUpdate, adressId: s
         ...updateDate
     });
 
-    await adressRepository.update({ id: adressId }, updateAdress)
+    await adressRepository.save(updateAdress)
 
     const updatedData = await adressResponseSerializer.validate(updateAdress, {
         stripUnknown: true
