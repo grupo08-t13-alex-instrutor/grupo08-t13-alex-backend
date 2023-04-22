@@ -14,7 +14,6 @@ const sessionService = async ({ email, password }: iUserLoginReq): Promise<iUser
         email: email,
     });
 
-
     if (!user) {
         throw new AppError(400, "User is not exists or invalidate email!");
     }
@@ -22,12 +21,13 @@ const sessionService = async ({ email, password }: iUserLoginReq): Promise<iUser
     const passwordMatch = await compare(password, user.password);
 
     if (!passwordMatch) {
-        throw new AppError(403, "password invalid");
+        throw new AppError(403, "Invalid email or password");
     }
-
+   
     const token = jwt.sign(
         {
             type: user.email,
+            buyer: user.buyer,
         },
         process.env.SECRET_KEY,
         {
@@ -37,7 +37,7 @@ const sessionService = async ({ email, password }: iUserLoginReq): Promise<iUser
     );
 
     return { token: token };
-
 }
+
 
 export default sessionService

@@ -3,11 +3,15 @@ import { createAdressController } from '../controllers/adress/createAdress.contr
 import { listAdressController } from '../controllers/adress/listAdress.controller';
 import { updateAdressController } from '../controllers/adress/updateAdress.controller';
 import ensureAuthMiddleware from '../middlewares/ensureAuth.middleware';
+import { ensureIsOwnerAddressMiddleware } from '../middlewares/ensureIsOwnerAddress.middleware';
+import ensureDataIsValidMiddleware from '../middlewares/ensureDataIsValid.middleware';
+import { adressRequestSerializer, adressUpdateSerializer } from '../serializers/Adress/adress.serializers';
 
 const adressRoutes = Router();
 
-adressRoutes.post('', createAdressController);
-adressRoutes.get('/:adressId', ensureAuthMiddleware, listAdressController);
-adressRoutes.patch('/:adressId', ensureAuthMiddleware, ensureAuthMiddleware, updateAdressController);
+adressRoutes.post('', ensureDataIsValidMiddleware(adressRequestSerializer), createAdressController);
+adressRoutes.get('/:adressId', ensureAuthMiddleware, ensureIsOwnerAddressMiddleware, listAdressController);
+adressRoutes.patch('/:adressId', ensureAuthMiddleware, ensureIsOwnerAddressMiddleware, ensureDataIsValidMiddleware(adressUpdateSerializer), updateAdressController);
+
 
 export { adressRoutes };

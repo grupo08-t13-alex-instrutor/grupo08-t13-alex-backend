@@ -1,17 +1,24 @@
 import { AppDataSource } from "../../data-source";
+import { Address } from "../../entities/adresses.entity";
 import { User } from "../../entities/users.entity";
-import AppError from "../../errors/AppError"
 
 const userDeletService = async (idUser: string): Promise<object> => {
-    
     const userRespository = AppDataSource.getRepository(User);
-    const findUser = await userRespository.findOneBy({ id: idUser });
 
-    if (!findUser) {
-        throw new AppError(404, "User not exists!");
-    };
+    const { address } = await userRespository.findOneOrFail({ 
+        where: { 
+            id: idUser 
+        },
+        relations: {
+            address: true
+        }
+    })
 
     await userRespository.delete({ id: idUser });
+    
+    if( address ){
+        await AppDataSource.getRepository( Address ).delete({ id: address.id });
+    }
 
     return {};
 }

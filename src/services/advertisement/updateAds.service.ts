@@ -1,16 +1,27 @@
 import { AppDataSource } from '../../data-source';
 import { Advertisement } from '../../entities/adverts.entity';
 import { Image } from '../../entities/images.entity';
+
+
+import AppError from '../../errors/AppError';
 import { IAdUpdateRequest } from '../../interfaces/Ads/request';
 import { IAdResponse } from '../../interfaces/Ads/response';
 import { adsResponseSerializer } from '../../serializers/Ads/ads.serializers';
 
-const updateAdsService = async (data: IAdUpdateRequest, advertisementId: string) : Promise<IAdResponse> => {
+
+const updateAdsService = async (data: IAdUpdateRequest, advertisementId: string): Promise<IAdResponse> => {
     const { images, ...dataAd } = data;
 
     const advertisementRespository = AppDataSource.getRepository(Advertisement);
 
-    const findAd = await advertisementRespository.findOne({
+
+    /*  const findAd = await advertisementRespository.findOne({
+         where: {
+             id: advertisementId
+         }
+     }
+     ) */
+    const findAd = await advertisementRespository.findOneOrFail({
         where: {
             id: advertisementId
         },
@@ -18,7 +29,8 @@ const updateAdsService = async (data: IAdUpdateRequest, advertisementId: string)
             images: true,
             user: true
         }
-    });
+
+    }).catch(reason => { throw new AppError(404, "Advertisement not exist!") })
 
     const updatedAd = advertisementRespository.create({
         ...findAd,

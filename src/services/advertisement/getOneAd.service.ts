@@ -1,24 +1,28 @@
 import { AppDataSource } from "../../data-source";
 import { Advertisement } from "../../entities/adverts.entity";
-// import { IAdResponse } from "../../interfaces/Ads";
-// import { adsResponseSerializer } from "../../serializers/ads.serializers";
+import AppError from "../../errors/AppError";
+import { IAdResponse } from "../../interfaces/Ads/response";
+import { adsResponseSerializer } from "../../serializers/Ads/ads.serializers";
 
-const getOneAdService = async (advertisementId: string)/* : Promise<IAdResponse> */ => {
+
+const getOneAdService = async (advertisementId: string): Promise<IAdResponse> => {
     const advertisementRepository = AppDataSource.getRepository(Advertisement);
 
-    const findAd = await advertisementRepository.findOne({
+
+    const findAd = await advertisementRepository.findOneOrFail({
         where: {
+
             id: advertisementId,
         },
         relations: {
             images: true,
             user: true
         }
-    })
+    }).catch(reason => { throw new AppError(404, "Advertisement not found!") })
 
-    // const validatedDataResponse = await adsResponseSerializer.validate( findAd, { stripUnknown: true });
+    const validatedDataResponse = await adsResponseSerializer.validate(findAd, { stripUnknown: true });
 
-    return findAd;
+    return validatedDataResponse;
 };
 
 export { getOneAdService };

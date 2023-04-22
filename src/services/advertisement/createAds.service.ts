@@ -2,17 +2,18 @@ import { AppDataSource } from "../../data-source";
 import { Advertisement } from "../../entities/adverts.entity";
 import { Image } from "../../entities/images.entity";
 import { User } from "../../entities/users.entity";
-// import { IAdRequest, IAdResponse } from "../../interfaces/Ads";
-// import { adsResponseSerializer } from "../../serializers/ads.serializers";
+import { IAdRequest } from "../../interfaces/Ads/request";
+import { IAdResponse } from "../../interfaces/Ads/response";
+import { adsResponseSerializer } from "../../serializers/Ads/ads.serializers";
 
-const createAdsService = async (data/* : IAdRequest */, userId: string)/* : Promise<IAdResponse> */ => {
+const createAdsService = async (data: IAdRequest, userId: string): Promise<IAdResponse> => {
     const { images, ...dataAd } = data;
 
     const userRepository = AppDataSource.getRepository(User);
     const advertisementRespository = AppDataSource.getRepository(Advertisement);
     const imageRepository = AppDataSource.getRepository(Image);
 
-    const foundUser = await userRepository.findOneBy({ id: userId });
+    const foundUser = await userRepository.findOneByOrFail({ id: userId });
 
     const newAd = advertisementRespository.create({
         ...dataAd,
@@ -45,9 +46,9 @@ const createAdsService = async (data/* : IAdRequest */, userId: string)/* : Prom
         ]
     }
 
-    // const validatedDataResponse = await adsResponseSerializer.validate( createdData, { stripUnknown: true });
+    const validatedDataResponse = await adsResponseSerializer.validate(createdData, { stripUnknown: true });
 
-    return createdData;
+    return validatedDataResponse;
 };
 
 export { createAdsService };

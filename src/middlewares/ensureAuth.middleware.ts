@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import AppError from "../errors/AppError";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import "dotenv/config";
 
 const ensureAuthMiddleware = async (
@@ -16,13 +16,14 @@ const ensureAuthMiddleware = async (
     
     token = token.split(" ")[1];
     
-    jwt.verify(token, process.env.SECRET_KEY, (error, decoded: any) => {
+    return jwt.verify(token, process.env.SECRET_KEY, (error: Error, decoded: JwtPayload) => {
         if (error) {
             throw new AppError(401, "Invalid Token");
         }
 
         req.user = {
             id: decoded.sub,
+            buyer: decoded.buyer
         };
 
         return next();

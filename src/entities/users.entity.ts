@@ -32,10 +32,10 @@ export class User {
   @Column()
   password: string;
 
-  @Column({ length: 11 })
+  @Column({ length: 14 })
   telephone: string;
 
-  @Column()
+  @Column({ length: 10 })
   date_of_birth: string;
 
   @Column({ length: 300 })
@@ -56,7 +56,7 @@ export class User {
   @OneToMany(() => Comment, (comment) => comment.user)
   comments: Comment[];
 
-  @OneToOne(() => Address, { onDelete: "CASCADE" })
+  @OneToOne(() => Address)
   @JoinColumn()
   address: Address;
 

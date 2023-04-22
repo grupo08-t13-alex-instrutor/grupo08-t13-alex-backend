@@ -6,8 +6,8 @@ export interface iUserRegisterReq {
     telephone: string;
     date_of_birth: string;
     description: string;
-    address: string;
     buyer?: boolean;
+    addressId: string;
 }
 
 export interface iUserUpdateReq {

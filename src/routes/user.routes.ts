@@ -5,13 +5,16 @@ import { userPatchController } from '../controllers/user/userPatch.controller';
 import { createUserController } from '../controllers/user/createUser.controller';
 import { listAnUserController } from '../controllers/user/listAnUser.controller';
 import { listAllUsersController } from '../controllers/user/listAllUsers.controller';
+import ensureDataIsValidMiddleware from '../middlewares/ensureDataIsValid.middleware';
+import { userRequestSerializer, userUpdateSerializer } from '../serializers/User/users.serializers';
 
 const userRoutes = Router();
 
-userRoutes.post('', createUserController)
-userRoutes.get('/allUsers', ensureAuthMiddleware, listAllUsersController)
+userRoutes.post('', ensureDataIsValidMiddleware(userRequestSerializer), createUserController)
+userRoutes.get('/allUsers', listAllUsersController)
 userRoutes.get('', ensureAuthMiddleware, listAnUserController)
-userRoutes.patch("", ensureAuthMiddleware, userPatchController)
+userRoutes.patch("", ensureAuthMiddleware, ensureDataIsValidMiddleware(userUpdateSerializer), userPatchController)
+
 userRoutes.delete("", ensureAuthMiddleware, userDeletController)
 
 export default userRoutes

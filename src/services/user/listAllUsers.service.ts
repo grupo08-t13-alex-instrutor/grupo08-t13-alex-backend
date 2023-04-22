@@ -9,7 +9,7 @@ export const listAllUserService = async (): Promise<iUserResponse[]> => {
 
     const users = await userRepo.find();
 
-    const correctUsersFormat = allUsersResponseSerializer.validate(users, {
+    const correctUsersFormat = await allUsersResponseSerializer.validate(users, {
         stripUnknown: true
     });
 

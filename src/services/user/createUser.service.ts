@@ -1,7 +1,7 @@
 import { AppDataSource } from "../../data-source";
 import AppError from "../../errors/AppError";
-import { Address } from "../../entities/adresses.entity";
 import User from '../../entities/users.entity';
+import { Address } from "../../entities/adresses.entity";
 import { iUserRegisterReq } from "../../interfaces/User/request";
 import { iUserResponse } from "../../interfaces/User/response";
 
@@ -9,7 +9,7 @@ import { iUserResponse } from "../../interfaces/User/response";
 export const createUserService = async (userData: iUserRegisterReq): Promise<iUserResponse> => {
 
     const {
-        address,
+        addressId,
         name,
         email,
         cpf,
@@ -23,11 +23,12 @@ export const createUserService = async (userData: iUserRegisterReq): Promise<iUs
     const addressRepository = AppDataSource.getRepository(Address);
 
     const searchUserByEmail = await userRepository.findOneBy({ email: email });
-    const searchAddress = await addressRepository.findOneBy({ id: address });
 
     if (searchUserByEmail) {
         throw new AppError(409, "Email already exists!");
     };
+
+    const searchAddress = await addressRepository.findOneBy({ id: addressId });
 
     if (!searchAddress) {
         throw new AppError(409, "You need to register your address!");
@@ -45,9 +46,10 @@ export const createUserService = async (userData: iUserRegisterReq): Promise<iUs
         address: searchAddress,
     });
 
-    const responseDate = await userRepository.save(user);
+    await userRepository.save(user);
 
-    const { password, ...userValues } = responseDate
+    const { password, ...userWithoutPassword } = user
 
-    return userValues;
-}; 
+    return userWithoutPassword
+}
+

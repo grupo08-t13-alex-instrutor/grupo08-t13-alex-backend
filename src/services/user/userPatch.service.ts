@@ -35,7 +35,7 @@ const userPatchService = async (dataUpdate: iUserUpdateReq, idUser: string): Pro
         ...dataUpdate,
     });
 
-    const saveDataUpdateUser = await userRespository.save(updateUser);
+    const saveDataUpdateUser = await userRespository.save(updateUser);    
 
     const { password, ...dataResponse } = saveDataUpdateUser;
 
