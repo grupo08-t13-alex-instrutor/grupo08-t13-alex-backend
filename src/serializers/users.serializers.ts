@@ -1,6 +1,6 @@
 import * as yup from "yup";
 import { SchemaOf } from "yup";
-import { iUserRequest, iUserResponse, iUserUpdate } from "../interfaces/User";
+import { iOneUserResponse, iUserRequest, iUserResponse, iUserUpdate } from "../interfaces/User";
 
 const userRequestSerializer: SchemaOf<iUserRequest> = yup.object().shape({
     name: yup.string()
@@ -68,6 +68,20 @@ const userResponseSerializer: SchemaOf<iUserResponse> = yup.object().shape({
     updatedAt: yup.date(),
 });
 
+const oneUserResponseSerializer: SchemaOf<iOneUserResponse> = yup.object().shape({
+    id: yup.string(),
+    name: yup.string().max(250, { name: 'deve ter no máximo 250 caracteres' }),
+    cpf: yup.string(),
+    email: yup.string().email(),
+    telephone: yup.string(),
+    date_of_birth: yup.string(),
+    description: yup.string().max(300, { name: 'deve ter no máximo 300 caracteres' }),
+    buyer: yup.boolean(),
+    createdAt: yup.date(),
+    updatedAt: yup.date(),
+    addressId: yup.string().required()
+});
+
 const allUsersResponseSerializer: SchemaOf<iUserResponse[]> = yup.array(userResponseSerializer)
 
-export { userRequestSerializer, userUpdateSerializer, userResponseSerializer, allUsersResponseSerializer };
+export { userRequestSerializer, userUpdateSerializer, userResponseSerializer, allUsersResponseSerializer, oneUserResponseSerializer };
