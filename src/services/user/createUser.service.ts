@@ -2,11 +2,11 @@ import { AppDataSource } from "../../data-source";
 import AppError from "../../errors/AppError";
 import User from '../../database/entities/users.entity';
 import { Address } from "../../database/entities/adresses.entity";
-import { iUserRegisterReq } from "../../interfaces/User/request";
+import { iUserRequest } from "../../interfaces/User/request";
 import { iUserResponse } from "../../interfaces/User/response";
 
 
-export const createUserService = async (userData: iUserRegisterReq): Promise<iUserResponse> => {
+export const createUserService = async (userData: iUserRequest): Promise<iUserResponse> => {
 
     const {
         addressId,
