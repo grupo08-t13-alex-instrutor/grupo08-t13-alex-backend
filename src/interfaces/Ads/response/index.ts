@@ -1,7 +1,14 @@
 import { iImageResponse } from "../../Img/response";
 
 export interface iUserAdResponse {
-    id: string;
+    id: string,
+    name: string,
+    cpf: string,
+    email: string,
+    telephone: string,
+    date_of_birth: string,
+    description: string,
+    buyer: boolean
 }
 
 export interface IAdResponse {

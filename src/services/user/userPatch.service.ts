@@ -1,6 +1,6 @@
 import { hashSync } from "bcryptjs";
 import { AppDataSource } from "../../data-source";
-import { User } from "../../entities/users.entity";
+import { User } from "../../database/entities/users.entity";
 import AppError from "../../errors/AppError"
 import { iUserUpdateReq } from "../../interfaces/User/request";
 import { iUserResponse } from "../../interfaces/User/response";
@@ -35,7 +35,7 @@ const userPatchService = async (dataUpdate: iUserUpdateReq, idUser: string): Pro
         ...dataUpdate,
     });
 
-    const saveDataUpdateUser = await userRespository.save(updateUser);    
+    const saveDataUpdateUser = await userRespository.save(updateUser);
 
     const { password, ...dataResponse } = saveDataUpdateUser;
 

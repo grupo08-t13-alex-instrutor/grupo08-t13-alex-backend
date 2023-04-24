@@ -1,7 +1,7 @@
 import { AppDataSource } from "../../data-source";
 import AppError from "../../errors/AppError";
-import User from '../../entities/users.entity';
-import { Address } from "../../entities/adresses.entity";
+import User from '../../database/entities/users.entity';
+import { Address } from "../../database/entities/adresses.entity";
 import { iUserRegisterReq } from "../../interfaces/User/request";
 import { iUserResponse } from "../../interfaces/User/response";
 

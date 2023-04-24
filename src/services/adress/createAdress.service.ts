@@ -1,5 +1,5 @@
 import { AppDataSource } from "../../data-source";
-import { Address } from "../../entities/adresses.entity";
+import { Address } from "../../database/entities/adresses.entity";
 import { iAdressRequest } from "../../interfaces/Adress/request";
 import { iAdressRespopnse } from "../../interfaces/Adress/response";
 import { adressResponseSerializer } from "../../serializers/Adress/adress.serializers";

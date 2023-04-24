@@ -2,7 +2,7 @@ import { AppDataSource } from "../../data-source";
 import { iUserResponse } from "../../interfaces/User/response";
 import { userResponseSerializer } from "../../serializers/User/users.serializers";
 import AppError from "../../errors/AppError";
-import Users from './../../entities/users.entity';
+import Users from '../../database/entities/users.entity';
 
 
 export const listAnUserService = async (userId: string): Promise<iUserResponse> => {

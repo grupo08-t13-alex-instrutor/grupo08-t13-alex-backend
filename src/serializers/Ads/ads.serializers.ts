@@ -7,25 +7,25 @@ import { IAdRequest, IAdUpdateRequest } from "../../interfaces/Ads/request";
 
 
 const adsRequestSerializer: SchemaOf<IAdRequest> = yup.object().shape({
-  brand: yup.string().max(250).required( { brand: 'Este campo é obrigatório!' } ),
-  model: yup.string().max(250).required( { model: 'O campo model é obrigatório!' } ),
+  brand: yup.string().max(250).required({ brand: 'Este campo é obrigatório!' }),
+  model: yup.string().max(250).required({ model: 'O campo model é obrigatório!' }),
   year: yup.string()
-    .matches( /[0-9]{4}/, { message: { year: 'Deve conter apenas números (0000)' } })
-    .required( { year: 'Este campo é obrigatório!' }),
-  fuel: yup.number().required( { fuel: 'Este campo é obrigatório!' }),
-  mileage: yup.number().required( { mileage: 'Este campo é obrigatório!' }),
-  color: yup.string().max(50).required( { color: 'Este campo é obrigatório!' }),
-  price: yup.number().required( { price: 'Este campo é obrigatório!' }),
-  description: yup.string().max(300).required( { description: 'Este campo é obrigatório!' }),
+    .matches(/[0-9]{4}/, { message: { year: 'Deve conter apenas números (0000)' } })
+    .required({ year: 'Este campo é obrigatório!' }),
+  fuel: yup.number().required({ fuel: 'Este campo é obrigatório!' }),
+  mileage: yup.number().required({ mileage: 'Este campo é obrigatório!' }),
+  color: yup.string().max(50).required({ color: 'Este campo é obrigatório!' }),
+  price: yup.number().required({ price: 'Este campo é obrigatório!' }),
+  description: yup.string().max(300).required({ description: 'Este campo é obrigatório!' }),
   published: yup.boolean().default(true),
-  images: yup.array(imageRequestSerializer).max(250).required( { images: 'Este campo é obrigatório!' }),
+  images: yup.array(imageRequestSerializer).max(250).required({ images: 'Este campo é obrigatório!' }),
 });
 
 const adsUpdateSerializer: SchemaOf<IAdUpdateRequest> = yup.object().shape({
   brand: yup.string().optional(),
   model: yup.string().optional(),
   year: yup.string()
-    .matches( /[0-9]{4}/, { message: { year: 'Deve conter apenas números (0000)' } } )
+    .matches(/[0-9]{4}/, { message: { year: 'Deve conter apenas números (0000)' } })
     .optional(),
   fuel: yup.number().optional(),
   mileage: yup.number().optional(),
@@ -51,7 +51,16 @@ const adsResponseSerializer: SchemaOf<IAdResponse> = yup.object().shape({
   createdAt: yup.date(),
   updatedAt: yup.date(),
   images: yup.array(imageResponseSerializer),
-  user: yup.object({ id: yup.string() })
+  user: yup.object({
+    id: yup.string(),
+    name: yup.string(),
+    cpf: yup.string(),
+    email: yup.string(),
+    telephone: yup.string(),
+    date_of_birth: yup.string(),
+    description: yup.string(),
+    buyer: yup.boolean(),
+  })
 });
 
 

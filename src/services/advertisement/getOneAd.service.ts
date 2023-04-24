@@ -1,5 +1,5 @@
 import { AppDataSource } from "../../data-source";
-import { Advertisement } from "../../entities/adverts.entity";
+import { Advertisement } from "../../database/entities/adverts.entity";
 import AppError from "../../errors/AppError";
 import { IAdResponse } from "../../interfaces/Ads/response";
 import { adsResponseSerializer } from "../../serializers/Ads/ads.serializers";

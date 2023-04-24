@@ -1,11 +1,11 @@
 import "dotenv/config";
 import "reflect-metadata";
 import { DataSource, DataSourceOptions } from "typeorm";
-import { Address } from "./entities/adresses.entity";
-import { User } from "./entities/users.entity";
-import { Advertisement } from "./entities/adverts.entity";
-import { Comment } from "./entities/comments.entity";
-import { Image } from "./entities/images.entity";
+import { Address } from "./database/entities/adresses.entity";
+import { User } from "./database/entities/users.entity";
+import { Advertisement } from "./database/entities/adverts.entity";
+import { Comment } from "./database/entities/comments.entity";
+import { Image } from "./database/entities/images.entity";
 import { InitialMigration1682021578734 } from "./migrations/1682021578734-InitialMigration";
 
 const dataSourceConfig = (): DataSourceOptions => {

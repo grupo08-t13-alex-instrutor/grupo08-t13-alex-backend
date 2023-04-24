@@ -1,6 +1,6 @@
 import { AppDataSource } from "../../data-source";
 import { allUsersResponseSerializer } from "../../serializers/User/users.serializers";
-import Users from './../../entities/users.entity';
+import Users from '../../database/entities/users.entity';
 import { iUserResponse } from "../../interfaces/User/response";
 
 export const listAllUserService = async (): Promise<iUserResponse[]> => {

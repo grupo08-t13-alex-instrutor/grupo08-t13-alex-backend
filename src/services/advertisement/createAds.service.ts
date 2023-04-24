@@ -1,7 +1,7 @@
 import { AppDataSource } from "../../data-source";
-import { Advertisement } from "../../entities/adverts.entity";
-import { Image } from "../../entities/images.entity";
-import { User } from "../../entities/users.entity";
+import { Advertisement } from "../../database/entities/adverts.entity";
+import { Image } from "../../database/entities/images.entity";
+import { User } from "../../database/entities/users.entity";
 import { IAdRequest } from "../../interfaces/Ads/request";
 import { IAdResponse } from "../../interfaces/Ads/response";
 import { adsResponseSerializer } from "../../serializers/Ads/ads.serializers";

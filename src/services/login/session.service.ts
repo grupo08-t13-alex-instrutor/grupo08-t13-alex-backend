@@ -1,6 +1,6 @@
 import { compare } from "bcryptjs";
 import { AppDataSource } from "../../data-source";
-import { User } from "../../entities/users.entity";
+import { User } from "../../database/entities/users.entity";
 import AppError from "../../errors/AppError";
 import jwt from "jsonwebtoken";
 import { iUserLoginReq } from "../../interfaces/session/request";
@@ -23,7 +23,7 @@ const sessionService = async ({ email, password }: iUserLoginReq): Promise<iUser
     if (!passwordMatch) {
         throw new AppError(403, "Invalid email or password");
     }
-   
+
     const token = jwt.sign(
         {
             type: user.email,
