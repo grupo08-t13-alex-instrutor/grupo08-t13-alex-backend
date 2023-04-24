@@ -7,10 +7,11 @@ import { Advertisement } from "./entities/adverts.entity";
 import { Comment } from "./entities/comments.entity";
 import { Image } from "./entities/images.entity";
 import { User } from "./entities/users.entity";
+import { NomeDaMigration1682366874242 } from "./migrations/1682366874242-nome-da-migration";
 
 const dataSourceConfig = (): DataSourceOptions => {
     const entities = [Address, Advertisement, Comment, Image, User];
-    const migrations = [];
+    const migrations = [NomeDaMigration1682366874242];
 
     const entitiesPath: string = path.join(__dirname, "./entities/*.{js,ts}");
     const migrationsPath: string = path.join(
