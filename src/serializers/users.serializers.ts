@@ -11,7 +11,6 @@ const userRequestSerializer: SchemaOf<iUserRequest> = yup.object().shape({
         .required( { cpf: 'Este campo é obrigatório!' } ),
     email: yup.string()
         .email()
-        .matches( /@*?(hotmail.com|gmail.com|outlook.com|kenzie.com)/, { message: { email: 'Deve ser do tipo \'hotmail.com\', \'gmail.com\', \'outlook.com\' ou \'kenzie.com\'' }})
         .required( { email: 'Este campo é obrigatório!' } ),
     password: yup.string()
         .min(8, { password: 'Deve conter pelo menos 8 caracteres' } )
