@@ -5,7 +5,7 @@ import { iAdressRespopnse } from "../../interfaces/Adress/response";
 import { adressResponseSerializer } from "../../serializers/Adress/adress.serializers";
 
 export const listAdressService = async (adressId: string): Promise<iAdressRespopnse> => {
-    const adressRepository = AppDataSource.getRepository(Address);
+    const adressRepository = AppDataSource.getRepository(Address)
 
     const adress = await adressRepository.findOneOrFail({
         where: {
@@ -13,8 +13,8 @@ export const listAdressService = async (adressId: string): Promise<iAdressRespop
         }
     }).catch( reason => { throw new AppError( 404, "Address not exist!" )} );
 
-    const validatedDataResponse = await adressResponseSerializer.validate( adress, { stripUnknown: true });
-    
+    const validatedDataResponse = await adressResponseSerializer.validate(adress, { stripUnknown: true });
+
 
     return validatedDataResponse;
 }

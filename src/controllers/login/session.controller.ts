@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import sessionService from "../../services/session/session.service"
+import sessionService from "../../services/login/session.service"
 import { iUserLoginReq } from "../../interfaces/session/request";
 
 const sessionController = async (req: Request, res: Response) => {

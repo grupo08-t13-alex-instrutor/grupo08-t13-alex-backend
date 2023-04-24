@@ -12,6 +12,6 @@ const adressRoutes = Router();
 adressRoutes.post('', ensureDataIsValidMiddleware(adressRequestSerializer), createAdressController);
 adressRoutes.get('/:adressId', ensureAuthMiddleware, ensureIsOwnerAddressMiddleware, listAdressController);
 adressRoutes.patch('/:adressId', ensureAuthMiddleware, ensureIsOwnerAddressMiddleware, ensureDataIsValidMiddleware(adressUpdateSerializer), updateAdressController);
-
+///:adressId
 
 export { adressRoutes };

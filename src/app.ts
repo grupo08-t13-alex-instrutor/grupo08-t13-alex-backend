@@ -6,7 +6,7 @@ import handleError from "./errors/handleError";
 import { adsRoutes } from "./routes/ads.routes";
 import userRoutes from "./routes/user.routes";
 import { adressRoutes } from "./routes/adress.routes";
-import sessionRouter from "./routes/session.routes";
+import sessionRouter from "./routes/login.routes";
 
 const app = express();
 
@@ -16,7 +16,7 @@ app.use(express.json());
 
 app.use("/user", userRoutes);
 app.use("/adress", adressRoutes);
-app.use("/session", sessionRouter)
+app.use("/login", sessionRouter)
 app.use("/ads", adsRoutes);
 
 

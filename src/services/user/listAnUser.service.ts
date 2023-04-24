@@ -9,8 +9,8 @@ export const listAnUserService = async (userId: string): Promise<iUserResponse> 
 
     const userRepository = AppDataSource.getRepository(Users);
 
-    const user = await userRepository.findOneBy( { id: userId })
-    .catch(reason => { throw new AppError(404, "User not exist!") })
+    const user = await userRepository.findOneBy({ id: userId })
+        .catch(reason => { throw new AppError(404, "User not exist!") })
 
     const correctUserFormat = await userResponseSerializer.validate(user, {
         stripUnknown: true
