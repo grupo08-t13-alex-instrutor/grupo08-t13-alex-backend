@@ -63,12 +63,11 @@ const adsResponseSerializer: SchemaOf<IAdResponse> = yup.object().shape({
   })
 });
 
-
 const listingAdsSerializer: SchemaOf<IAdResponse[]> = yup.array(adsResponseSerializer);
 
 export {
   adsResponseSerializer,
   listingAdsSerializer,
   adsRequestSerializer,
-  adsUpdateSerializer
+  adsUpdateSerializer,
 };

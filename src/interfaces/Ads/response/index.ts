@@ -27,3 +27,5 @@ export interface IAdResponse {
     images: iImageResponse[];
     user: iUserAdResponse;
 }
+
+

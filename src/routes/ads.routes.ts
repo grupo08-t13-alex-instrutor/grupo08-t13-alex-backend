@@ -9,7 +9,6 @@ import { ensureIsNotBuyerMiddleware } from '../middlewares/ensureIsNotBuyer.midd
 import { ensureIsOwnerAdMiddleware } from '../middlewares/ensureIsOwnerAd.middleware';
 import ensureAuthMiddleware from '../middlewares/ensureAuth.middleware';
 import { adsRequestSerializer, adsUpdateSerializer } from '../serializers/Ads/ads.serializers';
-
 const adsRoutes = Router();
 
 adsRoutes.post('', ensureAuthMiddleware, ensureIsNotBuyerMiddleware, ensureDataIsValidMiddleware(adsRequestSerializer), createAdsController);
