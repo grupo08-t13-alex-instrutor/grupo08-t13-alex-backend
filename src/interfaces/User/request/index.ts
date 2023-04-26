@@ -1,4 +1,3 @@
-import { iAdressRespopnse } from "../Adress";
 
 export interface iUserRequest{
     name: string;
@@ -12,7 +11,7 @@ export interface iUserRequest{
     addressId: string;
 }
 
-export interface iUserUpdate{
+export interface iUserUpdateReq {
     name?: string;
     cpf?: string;
     email?: string;

@@ -1,24 +1,27 @@
 import { AppDataSource } from "../../data-source";
-import { Advertisement } from "../../entities/adverts.entity";
+import { Advertisement } from "../../database/entities/adverts.entity";
 import AppError from "../../errors/AppError";
-import { IAdResponse } from "../../interfaces/Ads";
-import { adsResponseSerializer } from "../../serializers/ads.serializers";
+import { IAdResponse } from "../../interfaces/Ads/response";
+import { adsResponseSerializer } from "../../serializers/Ads/ads.serializers";
 
-const getOneAdService = async ( advertisementId: string): Promise<IAdResponse> => {
-    const advertisementRepository = AppDataSource.getRepository( Advertisement );
+
+const getOneAdService = async (advertisementId: string): Promise<IAdResponse> => {
+    const advertisementRepository = AppDataSource.getRepository(Advertisement);
+
 
     const findAd = await advertisementRepository.findOneOrFail({
-        where: { 
+        where: {
+
             id: advertisementId,
         },
         relations: {
             images: true,
             user: true
         }
-    }).catch( reason => { throw new AppError( 404, "Advertisement not found!" )})
+    }).catch(reason => { throw new AppError(404, "Advertisement not found!") })
 
-    const validatedDataResponse = await adsResponseSerializer.validate( findAd, { stripUnknown: true });
-    
+    const validatedDataResponse = await adsResponseSerializer.validate(findAd, { stripUnknown: true });
+
     return validatedDataResponse;
 };
 

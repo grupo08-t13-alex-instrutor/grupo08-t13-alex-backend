@@ -1,4 +1,4 @@
-import { hashSync } from "bcryptjs";
+import { getRounds, hashSync } from "bcryptjs";
 import {
   BeforeInsert,
   BeforeUpdate,
@@ -23,7 +23,7 @@ export class User {
   @Column({ length: 250 })
   name: string;
 
-  @Column({ unique: true, length: 14  })
+  @Column({ unique: true, length: 11 })
   cpf: string;
 
   @Column({ unique: true })
@@ -62,8 +62,11 @@ export class User {
 
   @BeforeInsert()
   @BeforeUpdate()
-  hashPassword(): void {
-    this.password = hashSync(this.password, 10);
+  hashPassword() {
+    const isEncrypted = getRounds(this.password);
+    if (!isEncrypted) {
+      this.password = hashSync(this.password, 10);
+    }
   }
 }
 

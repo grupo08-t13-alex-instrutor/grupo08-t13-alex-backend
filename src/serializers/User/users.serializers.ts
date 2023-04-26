@@ -1,6 +1,6 @@
 import * as yup from "yup";
 import { SchemaOf } from "yup";
-import { iOneUserResponse, iUserRequest, iUserResponse, iUserUpdate } from "../interfaces/User";
+import { iOneUserResponse, iUserRequest, iUserResponse, iUserUpdateReq } from "../../interfaces/User/request";
 
 const userRequestSerializer: SchemaOf<iUserRequest> = yup.object().shape({
     name: yup.string()
@@ -32,7 +32,7 @@ const userRequestSerializer: SchemaOf<iUserRequest> = yup.object().shape({
         .required( { addressId: 'Este campo é obrigatório!' } ),
 });
 
-const userUpdateSerializer: SchemaOf<iUserUpdate> = yup.object().shape({
+const userUpdateSerializer: SchemaOf<iUserUpdateReq> = yup.object().shape({
     name: yup.string().max( 250, { name: 'Deve ter no máximo 250 caracteres' } ).optional(),
     cpf: yup.string()
         .matches( /([0-9]{3})([.]{1})([0-9]{3})([.]{1})([0-9]{3})([-]{1})([0-9]{2})/, { message: { cpf: 'O padrão de cpf é 000.000.000-00' } })

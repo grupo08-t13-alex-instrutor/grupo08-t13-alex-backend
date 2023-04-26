@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { createUserService } from '../../services/user/createUser.service';
-import { iUserRequest } from '../../interfaces/User';
+import { iUserRequest } from '../../interfaces/User/request';
 
 export const createUserController = async (req: Request, res: Response) => {
     const userData: iUserRequest = req.body

@@ -1,7 +1,7 @@
 import { AppDataSource } from '../../data-source';
-import { Advertisement } from '../../entities/adverts.entity';
-import { IAdResponse } from '../../interfaces/Ads';
-import { listingAdsSerializer } from '../../serializers/ads.serializers';
+import { Advertisement } from '../../database/entities/adverts.entity';
+import { IAdResponse } from '../../interfaces/Ads/response';
+import { listingAdsSerializer } from '../../serializers/Ads/ads.serializers';
 
 const listingAdsService = async (): Promise<IAdResponse[]> => {
     const listingAdsRepository = AppDataSource.getRepository(Advertisement);
@@ -12,7 +12,7 @@ const listingAdsService = async (): Promise<IAdResponse[]> => {
         .leftJoinAndSelect('advertisement.user', 'user')
         .getMany();
 
-    const validatedDataResponse = await listingAdsSerializer.validate( advertisements, { stripUnknown: true });
+    const validatedDataResponse = await listingAdsSerializer.validate(advertisements, { stripUnknown: true });
 
     return validatedDataResponse;
 };
