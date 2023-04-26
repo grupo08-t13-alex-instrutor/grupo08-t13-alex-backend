@@ -1,13 +1,15 @@
 import { compare } from "bcryptjs";
-import { AppDataSource } from "../../data-source";
-import { User } from "../../database/entities/users.entity";
-import AppError from "../../errors/AppError";
 import jwt from "jsonwebtoken";
+import { AppDataSource } from "../../data-source";
+import { User } from "../../entities/users.entity";
+import AppError from "../../errors/AppError";
 import { iUserLoginReq } from "../../interfaces/session/request";
 import { iUserLoginRes } from "../../interfaces/session/response";
 
-const sessionService = async ({ email, password }: iUserLoginReq): Promise<iUserLoginRes> => {
-
+const sessionService = async ({
+    email,
+    password,
+}: iUserLoginReq): Promise<iUserLoginRes> => {
     const userRepository = AppDataSource.getRepository(User);
 
     const user = await userRepository.findOneBy({
@@ -37,7 +39,6 @@ const sessionService = async ({ email, password }: iUserLoginReq): Promise<iUser
     );
 
     return { token: token };
-}
+};
 
-
-export default sessionService
+export default sessionService;

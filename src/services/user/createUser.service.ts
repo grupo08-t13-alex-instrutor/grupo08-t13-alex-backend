@@ -1,13 +1,13 @@
 import { AppDataSource } from "../../data-source";
+import { Address } from "../../entities/adresses.entity";
+import User from "../../entities/users.entity";
 import AppError from "../../errors/AppError";
-import User from '../../database/entities/users.entity';
-import { Address } from "../../database/entities/adresses.entity";
 import { iUserRequest } from "../../interfaces/User/request";
 import { iUserResponse } from "../../interfaces/User/response";
 
-
-export const createUserService = async (userData: iUserRequest): Promise<iUserResponse> => {
-
+export const createUserService = async (
+    userData: iUserRequest
+): Promise<iUserResponse> => {
     const {
         addressId,
         name,
@@ -16,8 +16,8 @@ export const createUserService = async (userData: iUserRequest): Promise<iUserRe
         telephone,
         date_of_birth,
         description,
-        buyer
-    } = userData
+        buyer,
+    } = userData;
 
     const userRepository = AppDataSource.getRepository(User);
     const addressRepository = AppDataSource.getRepository(Address);
@@ -26,7 +26,7 @@ export const createUserService = async (userData: iUserRequest): Promise<iUserRe
 
     if (searchUserByEmail) {
         throw new AppError(409, "Email already exists!");
-    };
+    }
 
     const searchAddress = await addressRepository.findOneBy({ id: addressId });
 
@@ -48,8 +48,7 @@ export const createUserService = async (userData: iUserRequest): Promise<iUserRe
 
     await userRepository.save(user);
 
-    const { password, ...userWithoutPassword } = user
+    const { password, ...userWithoutPassword } = user;
 
-    return userWithoutPassword
-}
-
+    return userWithoutPassword;
+};
