@@ -51,11 +51,11 @@ export const sendEmailService = async (emailData: any): Promise<any> => {
 }, (err, info) => {
     console.log(err)
 })
-
-    return { message: "email enviado com sucesso" };
+console.log(resetToken)
+    return { token: resetToken };
 }
 
-export const resetPasswordService = async (password: string, resetToken: string): Promise<any>=> {
+export const resetPasswordService = async (password: string, resetToken: string): Promise<iUserResponse>=> {
     const mailRepo = AppDataSource.getRepository(Users);
     const user = await mailRepo.findOne({
         where: {
@@ -77,6 +77,8 @@ export const resetPasswordService = async (password: string, resetToken: string)
         },
         
     );
+    console.log(user)
+    return user
 }
 
 
