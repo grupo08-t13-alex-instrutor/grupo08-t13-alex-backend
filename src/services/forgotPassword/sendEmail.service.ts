@@ -10,21 +10,21 @@ import { hashSync } from "bcryptjs";
 const nodemailer = require('nodemailer')
 
 var transport = nodemailer.createTransport({
-    host: "smtp.smtp.gmail.com",
-    port: 465,
+    host: "smtp.gmail.com",
+    port: 587,
     auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
     }
 });
 
-export const sendEmailService = async (emailData: string): Promise<String> => {
+export const sendEmailService = async (emailData: any): Promise<any> => {
 
     const emailRepo = AppDataSource.getRepository(Users);
 
     const user = await emailRepo.findOne({
         where: {
-            email: emailData
+            email: emailData.email
         },
 
     })
@@ -33,24 +33,24 @@ export const sendEmailService = async (emailData: string): Promise<String> => {
     }
 
     const resetToken = randomUUID()
+    
 
-    const updateUser = await emailRepo.create({
-        where: { email },
-        data: {
+    await emailRepo.update(
+        { email: emailData },
+        {
             token: resetToken,
+            
         },
-    })
-
-    const saveData = await emailRepo.save(updateUser)
+    )
 
 
-    const resetPasswordTemplate = emailRepo.update(
-        user.email,
-        user.name,
-        resetToken,
-    );
-
-    await transport.sendMail(resetPasswordTemplate)
+    await transport.sendMail({ from: process.env.SMTP_USER,
+    to: process.env.SMTP_USER,
+    subject: 'Reset Password',
+    text: `Redefinasua senha localhost:5173/forgot/pass/resetPassword`
+}, (err, info) => {
+    console.log(err)
+})
 
     return { message: "email enviado com sucesso" };
 }
@@ -67,15 +67,16 @@ export const resetPasswordService = async (password: string, resetToken: string)
         throw new AppError(404, "User not exist!");
     }
 
-    await mailRepo.create({
-        where: {
+    await mailRepo.update(
+        {
             id: user.id,
         },
-        data: {
+         {
             password: hashSync(`${password}`, 10),
             token: null,
         },
-    });
+        
+    );
 }
 
 

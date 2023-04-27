@@ -8,10 +8,13 @@ import { Comment } from "./database/entities/comments.entity";
 import { Image } from "./database/entities/images.entity";
 import { User } from "./database/entities/users.entity";
 import { NomeDaMigration1682366874242 } from "./migrations/1682366874242-nome-da-migration";
+import { MigrationName1682605377146 } from "./migrations/1682605377146-migration-name";
+import { CorrectCpf1682608236390 } from "./migrations/1682608236390-correct_cpf";
+import { CorrectCpf1682609557103 } from "./migrations/1682609557103-correct_cpf";
 
 const dataSourceConfig = (): DataSourceOptions => {
     const entities = [Address, Advertisement, Comment, Image, User];
-    const migrations = [NomeDaMigration1682366874242];
+    const migrations = [CorrectCpf1682609557103];
 
     const entitiesPath: string = path.join(__dirname, "./entities/*.{js,ts}");
     const migrationsPath: string = path.join(

@@ -23,7 +23,7 @@ export class User {
   @Column({ length: 250 })
   name: string;
 
-  @Column({ unique: true, length: 11 })
+  @Column({ unique: true, length: 14 })
   cpf: string;
 
   @Column({ unique: true })
@@ -49,6 +49,9 @@ export class User {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @Column({default: null})
+  token: string
 
   @OneToMany(() => Advertisement, (advertisement) => advertisement.user)
   advertisements: Advertisement[];
