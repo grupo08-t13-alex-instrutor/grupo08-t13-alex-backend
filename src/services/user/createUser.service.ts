@@ -46,10 +46,10 @@ export const createUserService = async (userData: iUserRequest): Promise<iUserRe
         address: searchAddress,
     });
 
-    await userRepository.save(user).catch(error=> console.log(error));
+    await userRepository.save(user).catch(error => console.log(error));
 
-    // const { password, ...userWithoutPassword } = user
+    const { password, ...userWithoutPassword } = user
 
-    return user
+    return userWithoutPassword
 }
 

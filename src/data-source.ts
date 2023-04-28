@@ -7,14 +7,11 @@ import { Advertisement } from "./database/entities/adverts.entity";
 import { Comment } from "./database/entities/comments.entity";
 import { Image } from "./database/entities/images.entity";
 import { User } from "./database/entities/users.entity";
-import { NomeDaMigration1682366874242 } from "./migrations/1682366874242-nome-da-migration";
-import { MigrationName1682605377146 } from "./migrations/1682605377146-migration-name";
-import { CorrectCpf1682608236390 } from "./migrations/1682608236390-correct_cpf";
-import { CorrectCpf1682609557103 } from "./migrations/1682609557103-correct_cpf";
+import { CreatedEntitiesTokenUser1682704715181 } from "./migrations/1682704715181-CreatedEntitiesTokenUser";
 
 const dataSourceConfig = (): DataSourceOptions => {
     const entities = [Address, Advertisement, Comment, Image, User];
-    const migrations = [CorrectCpf1682609557103];
+    const migrations = [CreatedEntitiesTokenUser1682704715181];
 
     const entitiesPath: string = path.join(__dirname, "./entities/*.{js,ts}");
     const migrationsPath: string = path.join(
@@ -28,8 +25,8 @@ const dataSourceConfig = (): DataSourceOptions => {
         return {
             type: "postgres",
             url: process.env.DATABASE_URL,
-            entities: [entitiesPath],
-            migrations: [migrationsPath],
+            entities: entities,
+            migrations: migrations,
         };
     }
     return {

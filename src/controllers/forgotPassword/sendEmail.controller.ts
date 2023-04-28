@@ -4,7 +4,7 @@ sendEmailService
 
 
 export const sendEmailController = async (req: Request, res: Response) => {
-    const emailData: any  = req.body
-   await sendEmailService(emailData)
-    return res.status(200)
+    const emailData: { email: string } = req.body
+    const token = await sendEmailService(emailData)
+    return res.status(200).json(token)
 };
