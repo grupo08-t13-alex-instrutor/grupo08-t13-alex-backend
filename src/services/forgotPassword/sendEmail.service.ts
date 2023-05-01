@@ -44,7 +44,8 @@ export const sendEmailService = async (emailData: any): Promise<any> => {
     )
 
 
-    await transport.sendMail({ from: process.env.SMTP_USER,
+    await transport.sendMail({ 
+    from: process.env.SMTP_USER,
     to: process.env.SMTP_USER,
     subject: 'Reset Password',
     text: `Redefinasua senha localhost:5173/forgot/pass/resetPassword`
@@ -63,6 +64,9 @@ export const resetPasswordService = async (password: string, resetToken: string)
         },
     });
 
+    // console.log(user)
+    // console.log(user.password)
+
     if (!user) {
         throw new AppError(404, "User not exist!");
     }
@@ -78,6 +82,7 @@ export const resetPasswordService = async (password: string, resetToken: string)
         
     );
     console.log(user)
+    console.log(user.password)
     return user
 }
 
