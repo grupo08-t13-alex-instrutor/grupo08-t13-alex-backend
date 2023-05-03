@@ -47,8 +47,8 @@ export class Advertisement {
 
   @OneToMany(() => Image, (image) => image.advertisement)
   images: Image[];
-  
-  @OneToMany(() => Comment, (comment) => comment.advertisement)
+
+  @OneToMany(() => Comment, (comment) => comment.advertisement, { onDelete: "CASCADE" })
   comments: Comment[];
 
   @ManyToOne(() => User, (user) => user.advertisements, { onDelete: "CASCADE" })
