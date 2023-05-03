@@ -8,6 +8,7 @@ import userRoutes from "./routes/user.routes";
 import { adressRoutes } from "./routes/adress.routes";
 import sessionRouter from "./routes/login.routes";
 import resetpassRouter from "./routes/forgotPassword.routes";
+import commentsRouter from "./routes/comments.routes";
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use("/adress", adressRoutes);
 app.use("/login", sessionRouter)
 app.use("/ads", adsRoutes);
 app.use("/forgot", resetpassRouter);
+app.use("/comments", commentsRouter);
 
 
 app.use(handleError);

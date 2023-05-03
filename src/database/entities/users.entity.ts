@@ -50,13 +50,13 @@ export class User {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column({default: null})
+  @Column({ default: null })
   token: string
 
   @OneToMany(() => Advertisement, (advertisement) => advertisement.user)
   advertisements: Advertisement[];
 
-  @OneToMany(() => Comment, (comment) => comment.user)
+  @OneToMany(() => Comment, (comment) => comment.user, { onDelete: "CASCADE" })
   comments: Comment[];
 
   @OneToOne(() => Address)
