@@ -1,0 +1,1025 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de compra e venda de veículos",
+        "description": "Essa API tem como objetivo o CRUD de anúncio, usuários vendedores e compradores, onde se faz relação entre os anúncios",
+        "termsOfService": "Termos de serviço da API",
+        "contact": {
+            "email": "anibal4g@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/api-docs",
+            "description": "API de teste"
+        }
+    ],
+    "schemes": ["http"],
+    "paths":{
+        "/user": {
+            "post": {
+                "summary": "Cadastro de usuário",
+                "description": "Essa rota será responsável por cadastrar usuário e definir se será vendedor ou comprador",
+                "tags": ["user"],
+                "requestBody": {
+                    "content":{
+                        "aplication/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/user"
+                            },
+                            "examples":{
+                                "user":{
+                                    "value": {
+                                        "name": "Anibal Farias",
+                                        "cpf": "123.456.789-10",
+                                        "email": "anibal@mail.com",
+                                        "password": "Anibal@123",
+                                        "telephone": "(91)91234-5678",
+                                        "date_of_birth": "27/08/1994",
+                                        "description": "novo usuário",
+                                        "buyer": true,
+                                        "addressId": "uuid"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "409": {
+                        "description":"Email already exists!"
+                    },
+                    "409/2": {
+                        "description":"You need to register your address!"
+                    },
+                    "201":{
+                        "description":"Create",
+                        "content":{
+                            "aplication/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "$ref":"#/components/schemas/userResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "Lista um único usuário",
+                "description": "busca um usuário pelo seu Id",
+                "tags":["user"],
+                "security": [{"bearerAuth":[]}],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do usuário",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "404": {
+                        "description": "User not Found!"
+                    },
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "aplication/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref": "#/components/schemas/userResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+        },
+        "/login":{
+            "post":{
+                "summary":"Login deusuário",
+                "description": "momento em que o usuário se loga à sua conta",
+                "tags":["user"],
+                
+                "requestBody":{
+                    "content":{
+                    "aplication/json":{
+                        "schema":{
+                            "type":"object",
+                            "$ref": "#/components/schemas/login"
+                        },
+                        "examples":{
+                            "login":{
+                                "value":{
+                                    "email": "anibal@mail.com",
+                            "password": "Anibal@123"
+                                }
+                            }
+                            
+                        }
+                    }
+                }
+                },
+                "responses":{
+                    "400":{
+                        "description": "User is not exists or invalidate email!"
+                    },
+                    "403":{
+                        "description": "Invalid email or password"
+                    },
+                    "200":{
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/user/allUsers":{
+            "get":{
+                "summary": "Lista todos os usuários",
+                "description": "rota para listar todos os usuários cadastrados",
+                "tags":["user"],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "aplication/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/userResponse"
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                }
+
+            }
+        },
+        "/user/{id}": {
+            "put":{
+                "sumary": "atualiza os dados do usuário",
+                "description": "busca um usuário pelo seu Id para atualizar seus dados",
+                "tags":["user"],
+                "security": [{"bearerAuth":[]}],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do usuário",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content":{
+                        "aplication/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/user"
+                            },
+                            "examples":{
+                                "user":{
+                                    "value": {
+                                        "name": "Anibal Moraes",
+                                        "cpf": "123.456.789-10",
+                                        "email": "anibal123@mail.com",
+                                        "password": "Anibal@1234",
+                                        "telephone": "(91)91234-5678",
+                                        "date_of_birth": "27/08/1994",
+                                        "description": "novo usuário",
+                                        "buyer": true,
+                                        "addressId": "uuid"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }    
+            },
+            "delete":{
+                "summary": "Exclui usuário",
+                "description": "Exclui usuário pelo  seu Id",
+                "tags":["user"],
+                "security": [{"bearerAuth":[]}],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do usuário",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "404":{
+                        "description": "User not Found!"
+                    },
+                    "204":{
+                        "description": "No Content"
+                    }
+                    
+                }
+            }
+        },
+        "/adress":{
+            "post":{
+                "summary": "cadastro de endereço",
+                "description": "cria endereço do usuário",
+                "tags":["address"],
+                "requestBody":{
+                    "content":{
+                        "aplication/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/addressRequest"
+                            },
+                            "examples":{
+                                "address":{
+                                    "value":{
+                                        "cep":"12345-678",
+                                        "state":"Pará",
+                                        "city":"Belém",
+                                        "street": "Rua dos Alfeneiros",
+                                        "number": "4",
+                                        "complement": "embaixo da escada"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }, 
+                "responses":{
+                    "404":{
+                        "description":"Address not Found!"
+                    },
+                    "201":{
+                        "description":"Create",
+                        "content":{
+                            "aplication/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "$ref":"#/components/schemas/addressResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/adress/{addressId}":{
+            "get":{
+                "summary": "listar endereço deusuário",
+                "description": "lista o endereço do usuário pelo id",
+                "tags":["address"],
+                "security":[{"bearerAuth":[]}],
+                "parameters":[
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do endereço",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "404": {
+                        "description": "Address not Found!"
+                    },
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "aplication/json":{
+                                "schema":{
+                                    "type":"object",
+                                    "$ref": "#/components/schemas/addressResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put":{
+                "summary": "atualizar endereço deusuário",
+                "description": "atualliza o endereço do usuário pelo id",
+                "tags":["address"],
+                "security":[{"bearerAuth":[]}],
+                "parameters":[
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do endereço",
+                        "required": true
+                    }
+                ],
+                "requestBody":{
+                    "content":{
+                        "aplication/json":{
+                            "schema":{
+                                "$ref":"#/components/schemas/addressRequest"
+                            },
+                            "examples":{
+                                "address":{
+                                    "value":{
+                                        "cep":"12345-678",
+                                        "state":"Pará",
+                                        "city":"Londres",
+                                        "street": "Rua dos Alfeneiros",
+                                        "number": "5",
+                                        "complement": "embaixo da escada"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "404":{
+                        "description":"Address not Found!"
+                    },
+                    "200":{
+                        "description":"OK",
+                        "content":{
+                            "aplication/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "$ref":"#/components/schemas/addressResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+
+        },
+        "/ads":{
+            "post":{
+                "summary": "criar anúncio",
+                "description": "rota onde o usuário pode criar um anúncio",
+                "tags":["ads"],
+                "security": [{"bearerAuth":[]}],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id do usuário",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content":{
+                        "aplication/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/adsRequest"
+                            },
+                            "examples":{
+                                "ads":{
+                                    "value": {
+                                        "brand": "ford",
+                                        "model": "um aí",
+                                        "year": "2022",
+                                        "fuel": "1",
+                                        "mileage": 20000,
+                                        "color": "preto",
+                                        "price": 4000.00,
+                                        "description": "meia boca",
+                                        "published": true,
+                                        "images":[]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "201":{
+                        "description": "Create",
+                        "content":{
+                            "aplication/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "$ref":"#/components/schemas/adsResponse"
+                                }
+                            }
+                        }
+                    }
+                    
+                }
+
+            },
+            "get":{
+                "summary": "listar anúncios",
+                "description": "rota onde o usuário pode listar anúncios",
+                "tags":["ads"],
+                "security": [{"bearerAuth":[]}],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "listagem de anúncios",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "aplication/json":{
+                                "schema":{
+                                    "type": "array",
+                                    "items":{
+                                        "$ref":"#/components/schemas/adsResponse"
+                                    }
+                                    
+                                }
+                            }
+                        }
+                    }
+                    
+                }
+            }
+        },
+        "/ads/{advertisementId}":{
+            "get":{
+                "summary": "listar anúncio por id",
+                "description": "rota onde o usuário pode listar anúncio por id",
+                "tags":["ads"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "listagem de anúncio",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "aplication/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "$ref":"#/components/schemas/adsResponse" 
+                                }
+                            }
+                        }
+                    }
+                    
+                }
+            },
+            "put":{
+                "summary": "atuallizar anúncio por id",
+                "description": "rota onde o usuário pode atualizar anúncio por id",
+                "tags":["ads"],
+                "security": [{"bearerAuth":[]}],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "update de anúncio",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content":{
+                        "aplication/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/adsRequest"
+                            },
+                            "examples":{
+                                "ads":{
+                                    "value": {
+                                        "brand": "citroen",
+                                        "model": "um aí",
+                                        "year": "2022",
+                                        "fuel": "1",
+                                        "mileage": 15000,
+                                        "color": "magenta",
+                                        "price": 4000.00,
+                                        "description": "bem legal",
+                                        "published": true,
+                                        "images":[]
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "aplication/json":{
+                                "schema":{
+                                    "type": "object",
+                                    "$ref":"#/components/schemas/adsResponse" 
+                                }
+                            }
+                        }
+                    }
+                    
+                }
+            },
+            "delete":{
+                "summary": "deletar anúncio por id",
+                "description": "rota onde o usuário pode deletar anúncio por id",
+                "tags":["ads"],
+                "security": [{"bearerAuth":[]}],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "exclusão de anúncio",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "204":{
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
+        "/comments/{idAds}":{
+            "post":{
+                "summary": "Criar comentário",
+                "description": "Usuário pode criar um comentário em uma publicação de anúncio",
+                "tags":["comments"],
+                "security": [{"bearerAuth":[]}],
+                "parameters": [
+                    {
+                        "name": "idAds",
+                        "in": "path",
+                        "description": "id do anúncio",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "id do usuário",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content":{
+                        "aplication/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/commentsRequest"
+                            },
+                            "examples":{
+                                "comments":{
+                                    "value": {
+                                        "description": "um comentário bom"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "201":{
+                        "description": "Create",
+                        "content":{
+                            "aplication/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/commentsResponse"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get":{
+                "summary": "listar comentário",
+                "description": "listar comentários combaseno id do anúncio",
+                "tags":["comments"],
+                
+                "parameters": [
+                    {
+                        "name": "idAds",
+                        "in": "path",
+                        "description": "id do anúncio",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description": "OK",
+                        "content":{
+                            "aplication/json":{
+                                "schema":{
+                                    "type":"array",
+                                    "items":{
+                                       "$ref":"#/components/schemas/commentsResponse"
+                                    }  
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+
+        },
+        "/comments/{commentId}":{
+            "put":{
+                "summary": "Editar comentário",
+                "description": "Usuário pode editar um comentário em uma publicação de anúncio",
+                "tags":["comments"],
+                "security": [{"bearerAuth":[]}],
+                "parameters": [
+                    {
+                        "name": "commentId",
+                        "in": "path",
+                        "description": "id do comentário",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "id do usuário",
+                        "required": true
+                    }
+                ],
+                "requestBody": {
+                    "content":{
+                        "aplication/json":{
+                            "schema": {
+                                "$ref": "#/components/schemas/commentsRequest"
+                            },
+                            "examples":{
+                                "comments":{
+                                    "value": {
+                                        "description": "outro comentário bom"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses":{
+                    "201":{
+                        "description": "Create",
+                        "content":{
+                            "aplication/json":{
+                                "schema":{
+                                    "$ref":"#/components/schemas/commentsResponse"
+                                }
+                            }
+                        }
+                    }
+                }    
+            },
+            "delete":{
+                "summary": "Excluir comentário",
+                "description": "Usuário pode excluir um comentário em uma publicação de anúncio",
+                "tags":["comments"],
+                "security": [{"bearerAuth":[]}],
+                "parameters": [
+                    {
+                        "name": "commentId",
+                        "in": "path",
+                        "description": "id do comentário",
+                        "required": true
+                    },
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "id do usuário",
+                        "required": true
+                    }
+                ],
+                "responses":{
+                    "204":{
+                        "description": "No Content"
+                        
+                    }
+                }
+            }
+        },
+        "/forgot/pass":{
+            "post":{
+                "summary": "Recuperação de senha",
+                "description": "Usuário pode recuperar sua senha utilizando o email cadastrado",
+                "tags":["forgotPass"],
+                "requestBody":{
+                    "content":{
+                        "aplication/json":{
+                            "schema":{
+                                "type":"object",
+                                "email":{
+                                    "type":"string"
+                                }
+                            },
+                            "examples":{
+                                "forgotPassword":{
+                                    "value":{
+                                        "email": "leonardo@mail.com"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                },
+                "responses":{
+                    "404":{
+                        "description": "User not Found!"
+                    },
+                    "200":{
+                        "description":"OK",
+                        "content":{
+                            "aplication/http":{
+                                "schema":{
+                                    "type":"string",
+                                    "resetToken": "token"
+                                }
+                            }
+                        }
+                    }
+
+                }
+            }
+        },
+        "/forgot/pass/resetToken}":{
+            "put":{
+                "summary": "Alteração de senha",
+                "description": "Usuário pode alterar a senha como token enviado para seu email na recuperação desenha",
+                "tags":["forgotPass"],
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "path",
+                        "description": "token de recuperação de senha",
+                        "required": true
+                    }
+                ],
+                "requestBody":{
+                    "content":{
+                        "aplication/json":{
+                            "schema":{
+                                "type":"object",
+                                "password":{
+                                    "type":"string"
+                                }
+                            },
+                            "examples":{
+                                "forgotPassword":{
+                                    "value":{
+                                        "password": "senhaAlterada@123"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
+                },
+                "responses":{
+                    "201":{
+                        "description":"Create"
+                    }
+
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas":{
+            "user":{
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "cpf": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "telephone": {
+                        "type": "string"
+                    },
+                    "date_of_birth": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "buyer": {
+                        "type": "boolean"
+                    },
+                    "addressId": {
+                        "type": "string"
+                    }
+                }
+            },
+            "userResponse":{
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "cpf": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "telephone": {
+                        "type": "string"
+                    },
+                    "date_of_birth": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "buyer": {
+                        "type": "boolean"
+                    },
+                    "addressId": {
+                        "type": "string"
+                    }
+                }
+            },
+            "login":{
+                "type": "object",
+                "properties":{
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    }
+                }
+            },
+            "addressRequest":{
+                "type": "object",
+                "properties":{
+                    "cep":{
+                        "type":"string"
+                    },
+                    "state":{
+                        "type":"string"
+                    },
+                    "city":{
+                        "type":"string"
+                    },
+                    "street":{
+                        "type":"string"
+                    },
+                    "number":{
+                        "type": "number"
+                    },
+                    "complement":{
+                        "type":"string"
+                    }
+                }
+            },
+            "addressResponse":{
+                "type": "object",
+                "properties":{
+                    "id":{
+                        "type":"string"
+                    },
+                    "cep":{
+                        "type":"string"
+                    },
+                    "state":{
+                        "type":"string"
+                    },
+                    "city":{
+                        "type":"string"
+                    },
+                    "street":{
+                        "type":"string"
+                    },
+                    "number":{
+                        "type": "number"
+                    },
+                    "complement":{
+                        "type":"string"
+                    }
+                }
+            },
+            "adsRequest":{
+                "type":"object",
+                "properties":{
+                    "brand":{
+                        "type":"string"
+                    },
+                    "model":{
+                        "type":"string"
+                    },
+                    "year":{
+                        "type":"string"
+                    },
+                    "fuel":{
+                        "type":"number"
+                    },
+                    "mileage":{
+                        "type":"number"
+                    },
+                    "color":{
+                        "type":"string"
+                    },
+                    "price":{
+                        "type":"number"
+                    },
+                    "description":{
+                        "type":"string"
+                    },
+                    "published":{
+                        "type":"boolean"
+                    },
+                    "images":{
+                        "type":"array"
+                    }
+                }
+
+            },
+            "adsResponse":{
+                "type":"object",
+                "properties":{
+                    "id":{
+                        "type":"string"
+                    },
+                    "brand":{
+                        "type":"string"
+                    },
+                    "model":{
+                        "type":"string"
+                    },
+                    "year":{
+                        "type":"string"
+                    },
+                    "fuel":{
+                        "type":"number"
+                    },
+                    "mileage":{
+                        "type":"number"
+                    },
+                    "color":{
+                        "type":"string"
+                    },
+                    "price":{
+                        "type":"number"
+                    },
+                    "description":{
+                        "type":"string"
+                    },
+                    "published":{
+                        "type":"boolean"
+                    },
+                    "images":{
+                        "type":"array"
+                    }
+                }
+
+            },
+            "commentsRequest":{
+                "type":"object",
+                "properties":{
+                    "description":{
+                        "type": "string"
+                    }
+                }
+            },
+            "commentsResponse":{
+                "type": "object",
+                "properties":{
+                    "id":{
+                        "type": "string"
+                    },
+                    "description":{
+                        "type": "string"
+                    },
+                    "createdAt":{
+                        "type": "date"
+                    },
+                    "user":{
+                        "type": "object"
+                    },
+                    "advertisement":{
+                        "type": "object"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+    
+}
