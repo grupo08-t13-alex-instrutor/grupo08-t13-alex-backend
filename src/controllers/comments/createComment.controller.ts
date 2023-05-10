@@ -6,6 +6,8 @@ const createCommentController = async (req: Request, res: Response) => {
 
     const data: newDataComment = { ...req.body, user: req.user.id, advertisement: req.params.idAds }
 
+    console.log("aqui ó", data);
+
     const comment = await createCommentService(data)
 
     return res.status(200).json(comment)
