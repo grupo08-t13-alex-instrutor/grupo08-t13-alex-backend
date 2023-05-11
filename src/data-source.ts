@@ -7,11 +7,11 @@ import { Advertisement } from "./database/entities/adverts.entity";
 import { Comment } from "./database/entities/comments.entity";
 import { Image } from "./database/entities/images.entity";
 import { User } from "./database/entities/users.entity";
-import { CreatedEntitiesTokenUser1682704715181 } from "./migrations/1682704715181-CreatedEntitiesTokenUser";
+import { MigrationName1683740251643 } from "./migrations/1683740251643-migration-name";
 
 const dataSourceConfig = (): DataSourceOptions => {
     const entities = [Address, Advertisement, Comment, Image, User];
-    const migrations = [CreatedEntitiesTokenUser1682704715181];
+    const migrations = [MigrationName1683740251643];
 
     const entitiesPath: string = path.join(__dirname, "./entities/*.{js,ts}");
     const migrationsPath: string = path.join(

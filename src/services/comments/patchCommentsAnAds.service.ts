@@ -18,7 +18,6 @@ const patchCommentsAnAdsService = async (commentId: string, userId: string, desc
         }
     })
 
-
     if (!comment) {
         throw new AppError(404, "comment not exist");
     }
